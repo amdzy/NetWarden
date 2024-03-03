@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
+using NetManager.Core.Extensions;
 
 namespace NetManager.Core.Helpers;
 
@@ -7,6 +8,8 @@ internal class DataHelpers
 {
     public static string GetRootIp(IPAddress ip)
     {
+        ArgumentNullException.ThrowIfNull(ip);
+
         string ipString = ip.ToString();
         return ipString.Substring(0, ipString.LastIndexOf('.') + 1);
     }
