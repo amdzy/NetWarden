@@ -12,6 +12,7 @@ internal class Scanner : IDisposable
 {
     private LibPcapLiveDevice _device;
     private DeviceManager _deviceManager;
+    private NameResolver _nameResolver;
     private ConcurrentDictionary<string, Client> _clients = [];
     private CancellationTokenSource _cancellationTokenSource;
     private System.Timers.Timer? _backgroundScanTimer;
@@ -21,9 +22,10 @@ internal class Scanner : IDisposable
     public event EventHandler? ClientsChanged;
 
 
-    public Scanner(DeviceManager deviceManager)
+    public Scanner(DeviceManager deviceManager, NameResolver nameResolver)
     {
         _deviceManager = deviceManager;
+        _nameResolver = nameResolver;
         _device = _deviceManager.CreateDevice("arp", OnPacketArrival);
         _cancellationTokenSource = new CancellationTokenSource();
     }
@@ -102,8 +104,12 @@ internal class Scanner : IDisposable
         var mac = arpPacket.SenderHardwareAddress.ToString();
         if (!_clients.ContainsKey(mac))
         {
-            var device = new Client(arpPacket.SenderProtocolAddress, arpPacket.SenderHardwareAddress);
-            _clients.TryAdd(mac, device);
+            var client = new Client(arpPacket.SenderProtocolAddress, arpPacket.SenderHardwareAddress);
+            _clients.TryAdd(mac, client);
+
+            _nameResolver.ResolveVendorName(client);
+            _nameResolver.ResolveClientName(client);
+
             ClientsChanged?.Invoke(this, EventArgs.Empty);
         }
         else

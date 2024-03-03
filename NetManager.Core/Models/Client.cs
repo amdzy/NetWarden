@@ -11,7 +11,7 @@ public class Client
     public DateTime DateAdded { get; } = DateTime.UtcNow;
     public bool HasFriendlyName { get; private set; }
     public bool IsKilled { get; internal set; }
-    public string Name { get; private set; }
+    public string Name { get; internal set; }
     public string Vendor { get; internal set; }
     public string Type { get; internal set; }
     public DateTime LastArpTime { get; private set; } = DateTime.UtcNow;
@@ -21,7 +21,7 @@ public class Client
     {
         Ip = ip;
         Mac = mac;
-        Name = mac.ToString();
+        Name = ip.ToString();
         Type = "Unknown";
         Vendor = "Unknown";
         IsOnline = true;
