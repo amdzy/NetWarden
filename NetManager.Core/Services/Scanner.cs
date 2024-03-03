@@ -1,7 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Timers;
 using NetManager.Core.Models;
 using PacketDotNet;

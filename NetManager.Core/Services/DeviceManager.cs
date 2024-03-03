@@ -21,7 +21,10 @@ public class DeviceManager
         var device = LibPcapLiveDeviceList.New()[GetAdapterName(adapterName)];
         device.Open(DeviceModes.Promiscuous, readTimeout);
         device!.Filter = filter;
-        device.OnPacketArrival += packetArrivalHandler;
+        if (packetArrivalHandler is not null)
+        {
+            device.OnPacketArrival += packetArrivalHandler;
+        }
 
         return device;
     }

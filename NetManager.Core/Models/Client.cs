@@ -10,12 +10,12 @@ public class Client
     public PhysicalAddress Mac { get; }
     public DateTime DateAdded { get; } = DateTime.UtcNow;
     public bool HasFriendlyName { get; private set; }
-    public bool IsKilled { get; private set; }
+    public bool IsKilled { get; internal set; }
     public string Name { get; private set; }
-    public string Vendor { get; private set; }
-    public string Type { get; private set; }
+    public string Vendor { get; internal set; }
+    public string Type { get; internal set; }
     public DateTime LastArpTime { get; private set; } = DateTime.UtcNow;
-    public bool IsOnline { get; private set; }
+    public bool IsOnline { get; internal set; }
 
     public Client(IPAddress ip, PhysicalAddress mac)
     {
@@ -27,9 +27,7 @@ public class Client
         IsOnline = true;
     }
 
-    public void SetIsOnline() => IsOnline = true;
-    public void SetIsOffline() => IsOnline = false;
     public void UpdateLastArpTime() => LastArpTime = DateTime.UtcNow;
-    public bool IsGateway() => Mac!.Equals(HostInfo.HostMac);
+    public bool IsGateway() => Ip!.Equals(HostInfo.GatewayIp);
     public bool IsLocalDevice() => Mac!.Equals(HostInfo.HostMac);
 }

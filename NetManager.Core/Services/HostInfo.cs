@@ -9,6 +9,8 @@ public class HostInfo
 {
     public static IPAddress? HostIp { get; private set; }
     public static PhysicalAddress? HostMac { get; private set; }
+    public static IPAddress? GatewayIp { get; private set; }
+    public static PhysicalAddress? GatewayMAc { get; private set; }
     public static string? NetworkAdapterName { get; private set; }
 
     public static void SetHostInfo(LibPcapLiveDevice device)
@@ -18,11 +20,12 @@ public class HostInfo
             if (addr.Addr.ipAddress != null)
             {
                 HostIp = addr.Addr.ipAddress;
-                HostMac = addr.Addr.hardwareAddress;
                 break;
             }
         }
         NetworkAdapterName = device.Interface.FriendlyName;
+        HostMac = device.MacAddress;
+        GatewayIp = device.Interface.GatewayAddresses[0];
     }
 
     public static string? RootIp => DataHelpers.GetRootIp(HostIp!);
