@@ -10,16 +10,17 @@ using SharpPcap.LibPcap;
 
 namespace NetManager.Core.Services;
 
-public class Scanner : IDisposable
+internal class Scanner : IDisposable
 {
     private LibPcapLiveDevice _device;
     private DeviceManager _deviceManager;
     private ConcurrentDictionary<string, Client> _clients = [];
-    public bool IsRunning { get; private set; }
-    public bool IsBackgroundRunning { get; private set; }
     private CancellationTokenSource _cancellationTokenSource;
     private System.Timers.Timer? _backgroundScanTimer;
     private System.Timers.Timer? _isAliveTimer;
+    public bool IsRunning { get; private set; }
+    public bool IsBackgroundRunning { get; private set; }
+    public event EventHandler? ClientsChanged;
 
 
     public Scanner(DeviceManager deviceManager)
@@ -105,13 +106,15 @@ public class Scanner : IDisposable
         {
             var device = new Client(arpPacket.SenderProtocolAddress, arpPacket.SenderHardwareAddress);
             _clients.TryAdd(mac, device);
+            ClientsChanged?.Invoke(this, EventArgs.Empty);
         }
         else
         {
             _clients[mac].UpdateLastArpTime();
             if (!_clients[mac].IsOnline)
             {
-                _clients[mac].SetIsOnline();
+                ClientsChanged?.Invoke(this, EventArgs.Empty);
+                _clients[mac].IsOnline = true;
             }
         }
     }
@@ -155,7 +158,7 @@ public class Scanner : IDisposable
                 client.Value.IsLocalDevice() == false &&
                 (DateTime.UtcNow - client.Value.LastArpTime).Seconds > 30)
             {
-                client.Value.SetIsOffline();
+                client.Value.IsOnline = false;
             }
         }
     }
