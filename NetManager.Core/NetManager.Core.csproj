@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="SharpPcap" Version="6.3.0" />
+
+    <EmbeddedResource Include="Assets/vendors.json" />
   </ItemGroup>
 
 </Project>
