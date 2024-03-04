@@ -12,6 +12,7 @@ public class HostInfo
     public static IPAddress? GatewayIp { get; private set; }
     public static PhysicalAddress? GatewayMAc { get; private set; }
     public static string? NetworkAdapterName { get; private set; }
+    public static IPAddress? NetMask { get; private set; }
 
     public static void SetHostInfo(LibPcapLiveDevice device)
     {
@@ -20,6 +21,7 @@ public class HostInfo
             if (addr.Addr.ipAddress != null)
             {
                 HostIp = addr.Addr.ipAddress;
+                NetMask = addr.Netmask.ipAddress;
                 break;
             }
         }

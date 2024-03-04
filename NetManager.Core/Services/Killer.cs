@@ -26,7 +26,7 @@ internal class Killer
     {
         var hasClient = _scanner.GetClients().TryGetValue(victim.Mac.ToString(), out Client? client);
         if (!hasClient) return;
-        if (client!.IsLocalDevice() || client.IsGateway()) return;
+        if (client!.IsLocalDevice() || client.IsGateway() || client.IsKilled) return;
         client!.IsKilled = true;
 
         Task.Run(async () =>
