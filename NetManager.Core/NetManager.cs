@@ -1,12 +1,97 @@
-﻿using SharpPcap;
+﻿using NetManager.Core.Exceptions;
+using NetManager.Core.Models;
+using NetManager.Core.Services;
+using SharpPcap;
+using SharpPcap.LibPcap;
 
 namespace NetManager.Core;
 
 public class NetManager
 {
-
-    public static CaptureDeviceList ListDevices()
+    private Scanner _scanner;
+    private DeviceManager _deviceManager;
+    private Killer _killer;
+    private NameResolver _nameResolver;
+    public event EventHandler? ClientsChanged
     {
-        return CaptureDeviceList.Instance;
+        add => _scanner.ClientsChanged += value;
+        remove => _scanner.ClientsChanged -= value;
+    }
+
+    public NetManager()
+    {
+        var device = ListDevices()?[0];
+        if (device is null)
+        {
+            throw new NotSupportedException("No supported device was found");
+        }
+        HostInfo.SetHostInfo(device);
+        _deviceManager = new DeviceManager();
+        _nameResolver = new NameResolver();
+        _scanner = new Scanner(_deviceManager, _nameResolver);
+        _killer = new Killer(_scanner, _deviceManager);
+    }
+
+    public void Start()
+    {
+        try
+        {
+            _killer.Start();
+            _scanner.Start();
+        }
+        catch (PcapException ex)
+        {
+            switch (ex.Error)
+            {
+                case PcapError.PermissionDenied:
+                    throw new PermissionDeniedException("Permission Denied, make sure you have the permissions to sniff packages");
+                case PcapError.PlatformNotSupported:
+                    throw new PlatformNotSupported();
+                default:
+                    throw;
+            }
+        }
+    }
+
+    public void StopScan()
+    {
+        _scanner.Stop();
+    }
+
+    public void StartBackgroundScan()
+    {
+        _scanner.StartBackgroundScan();
+    }
+
+    public void StopBackgroundScan()
+    {
+        _scanner.StopBackgroundScan();
+    }
+
+    public void Refresh()
+    {
+        _scanner.Refresh();
+    }
+
+    public Client[] GetClients()
+    {
+        return _scanner.GetClients().Values.ToArray();
+    }
+
+    public void KillClient(Client client)
+    {
+        _killer.Kill(client);
+    }
+
+    public void UnKillClient(Client client)
+    {
+        _killer.UnKill(client);
+    }
+
+    public static IList<LibPcapLiveDevice> ListDevices()
+    {
+        LibPcapLiveDeviceList captureDeviceList = LibPcapLiveDeviceList.Instance;
+        captureDeviceList.Refresh();
+        return captureDeviceList.Where(x => x.Addresses.Any(x => x.Addr.type == Sockaddr.AddressTypes.AF_INET_AF_INET6 && x.Addr?.ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)).ToList();
     }
 }
