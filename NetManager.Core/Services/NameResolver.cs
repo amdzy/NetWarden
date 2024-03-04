@@ -47,7 +47,7 @@ public class NameResolver
         }
         catch
         {
-            Console.WriteLine("Failed to resolve client name");
+            // Console.WriteLine("Failed to resolve client name");
         }
     }
 }

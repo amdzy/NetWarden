@@ -10,7 +10,7 @@ namespace NetManager.Core.Services;
 
 internal class Scanner : IDisposable
 {
-    private LibPcapLiveDevice _device;
+    private LibPcapLiveDevice? _device;
     private DeviceManager _deviceManager;
     private NameResolver _nameResolver;
     private ConcurrentDictionary<string, Client> _clients = [];
@@ -26,7 +26,6 @@ internal class Scanner : IDisposable
     {
         _deviceManager = deviceManager;
         _nameResolver = nameResolver;
-        _device = _deviceManager.CreateDevice("arp", OnPacketArrival);
         _cancellationTokenSource = new CancellationTokenSource();
     }
 
@@ -34,10 +33,12 @@ internal class Scanner : IDisposable
     {
         if (!IsRunning)
         {
+            _device ??= _deviceManager.CreateDevice("arp", OnPacketArrival);
+
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource = new CancellationTokenSource();
             IsRunning = true;
-            _device.StartCapture();
+            _device?.StartCapture();
             ProbeDevices();
         }
         StartBackgroundScan();
