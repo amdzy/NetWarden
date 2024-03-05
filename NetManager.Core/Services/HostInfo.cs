@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
-using NetManager.Core.Helpers;
+using NetManager.Core.Extensions;
 using SharpPcap.LibPcap;
 
 namespace NetManager.Core.Services;
@@ -30,7 +30,7 @@ public class HostInfo
         GatewayIp = device.Interface.GatewayAddresses[0];
     }
 
-    public static string? RootIp => DataHelpers.GetRootIp(HostIp!);
+    public static string? RootIp => HostIp!.GetRootIp();
     public readonly static PhysicalAddress BroadcastMac = PhysicalAddress.Parse("FF-FF-FF-FF-FF-FF");
     public readonly static PhysicalAddress EmptyMac = PhysicalAddress.Parse("00-00-00-00-00-00");
 
