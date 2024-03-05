@@ -1,10 +1,10 @@
 namespace NetManager.Core.Exceptions;
 
-public class PlatformNotSupported : Exception
+public class PlatformNotSupportedException : Exception
 {
-    public PlatformNotSupported() : base() { }
+    public PlatformNotSupportedException() : base("Platform not supported.") { }
 
-    public PlatformNotSupported(string message) : base(message) { }
+    public PlatformNotSupportedException(string message) : base(message) { }
 
-    public PlatformNotSupported(string message, Exception innerException) : base(message, innerException) { }
+    public PlatformNotSupportedException(string message, Exception innerException) : base(message, innerException) { }
 }

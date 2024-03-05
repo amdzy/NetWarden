@@ -2,7 +2,7 @@ namespace NetManager.Core.Exceptions;
 
 public class PermissionDeniedException : Exception
 {
-    public PermissionDeniedException() : base() { }
+    public PermissionDeniedException() : base("Permission Denied, Make sure you have enough permissions to run.") { }
 
     public PermissionDeniedException(string message) : base(message) { }
 
