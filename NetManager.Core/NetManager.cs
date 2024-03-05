@@ -44,9 +44,9 @@ public class NetManager
             switch (ex.Error)
             {
                 case PcapError.PermissionDenied:
-                    throw new PermissionDeniedException("Permission Denied, make sure you have the permissions to sniff packages");
+                    throw new PermissionDeniedException();
                 case PcapError.PlatformNotSupported:
-                    throw new PlatformNotSupported();
+                    throw new Exceptions.PlatformNotSupportedException();
                 default:
                     throw;
             }

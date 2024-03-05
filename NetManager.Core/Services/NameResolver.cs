@@ -16,7 +16,8 @@ public class NameResolver
             var info = Assembly.GetExecutingAssembly().GetName();
             var name = info.Name;
             using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{name}.Assets.vendors.json")!;
-            Vendors = JsonSerializer.Deserialize<Vendor[]>(stream);
+            Vendors = JsonSerializer.Deserialize(stream, typeof(List<Vendor>), SourceGenerationContext.Default)
+                as List<Vendor>;
         }
     }
 
@@ -29,8 +30,6 @@ public class NameResolver
 
         if (vendor is not null) vendorName = vendor.VendorName;
         client.Vendor = vendorName!;
-
-
     }
 
     public void ResolveClientName(Client client)
