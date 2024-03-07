@@ -18,9 +18,8 @@ internal class Scanner : IDisposable
     private System.Timers.Timer? _backgroundScanTimer;
     private System.Timers.Timer? _isAliveTimer;
     public bool IsRunning { get; private set; }
-    public bool IsBackgroundRunning { get; private set; }
+    public bool IsBackgroundScanning { get; private set; }
     public event EventHandler? ClientsChanged;
-
 
     public Scanner(DeviceManager deviceManager, NameResolver nameResolver)
     {
@@ -51,21 +50,21 @@ internal class Scanner : IDisposable
 
     public void StartBackgroundScan()
     {
-        if (IsBackgroundRunning) return;
+        if (IsBackgroundScanning) return;
 
         _backgroundScanTimer?.Dispose();
         _backgroundScanTimer = new System.Timers.Timer(TimeSpan.FromSeconds(10));
         _backgroundScanTimer.Elapsed += OnTimedEvent;
         _backgroundScanTimer.Start();
-        IsBackgroundRunning = true;
+        IsBackgroundScanning = true;
 
         InitIsAlive();
     }
 
     public void StopBackgroundScan()
     {
-        if (!IsBackgroundRunning) return;
-        IsBackgroundRunning = false;
+        if (!IsBackgroundScanning) return;
+        IsBackgroundScanning = false;
         _backgroundScanTimer?.Stop();
         StopIsAlive();
     }
@@ -87,6 +86,7 @@ internal class Scanner : IDisposable
     {
         _cancellationTokenSource?.Cancel();
         IsRunning = false;
+        _device?.StopCapture();
         StopBackgroundScan();
     }
 
@@ -99,7 +99,7 @@ internal class Scanner : IDisposable
     {
         Packet packet = Packet.ParsePacket(rawCapture.LinkLayerType, rawCapture.Data);
         ArpPacket arpPacket = packet.Extract<ArpPacket>();
-        if (arpPacket == null)
+        if (arpPacket is null || arpPacket.Operation == ArpOperation.Request)
             return;
 
         var mac = arpPacket.SenderHardwareAddress.ToString();
@@ -118,8 +118,8 @@ internal class Scanner : IDisposable
             _clients[mac].UpdateLastArpTime();
             if (!_clients[mac].IsOnline)
             {
-                ClientsChanged?.Invoke(this, EventArgs.Empty);
                 _clients[mac].IsOnline = true;
+                ClientsChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }
@@ -133,9 +133,19 @@ internal class Scanner : IDisposable
                 if (_device == null || _device.Opened == false)
                     break;
                 var targetIp = IPAddress.Parse(HostInfo.RootIp + i);
-                var arpRequestPacket = new ArpPacket(ArpOperation.Request, HostInfo.EmptyMac, targetIp, _device.MacAddress, HostInfo.HostIp);
-                var ethernetPacket = new EthernetPacket(_device.MacAddress, HostInfo.BroadcastMac, EthernetType.Arp);
-                ethernetPacket.PayloadPacket = arpRequestPacket;
+                var arpPacket = new ArpPacket(ArpOperation.Request,
+                    targetHardwareAddress: HostInfo.EmptyMac,
+                    targetProtocolAddress: targetIp,
+                    senderHardwareAddress: _device.MacAddress,
+                    senderProtocolAddress: HostInfo.HostIp);
+
+                var ethernetPacket = new EthernetPacket(
+                    sourceHardwareAddress: _device.MacAddress,
+                    destinationHardwareAddress: HostInfo.BroadcastMac,
+                    EthernetType.Arp)
+                {
+                    PayloadPacket = arpPacket
+                };
                 _device.SendPacket(ethernetPacket);
             }
         });
@@ -161,9 +171,10 @@ internal class Scanner : IDisposable
         {
             if (client.Value.IsGateway() == false &&
                 client.Value.IsLocalDevice() == false &&
-                (DateTime.UtcNow - client.Value.LastArpTime).Seconds > 30)
+                (DateTime.UtcNow - client.Value.LastArpTime).Seconds > 45)
             {
                 client.Value.IsOnline = false;
+                ClientsChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }
