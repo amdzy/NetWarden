@@ -1,5 +1,4 @@
 using System.Data;
-using NetManager.Cli.Types;
 using NetManager.Core.Extensions;
 using NetManager.Core.Models;
 using Terminal.Gui;
@@ -10,7 +9,8 @@ public class MainController
 {
     private Core.NetManager _netManager;
 
-    public RangeEnabledObservableCollection<Client> Clients = [];
+    public Client[] Clients = [];
+    public event EventHandler? ClientsChanged;
 
     public MainController(Core.NetManager netManager)
     {
@@ -32,40 +32,40 @@ public class MainController
 
     public void KillClient(int row)
     {
-        if (row < 0 || row > Clients.Count) return;
+        if (row < 0 || row > Clients.Length) return;
         var client = Clients[row];
         if (client is null) return;
         _netManager.KillClient(client);
-        Clients.ClearAndAddRange(_netManager.GetClients());
+        UpdateClients();
     }
 
     public void UnKillClient(int row)
     {
-        if (row < 0 || row > Clients.Count) return;
+        if (row < 0 || row > Clients.Length) return;
         var client = Clients[row];
         if (client is null) return;
         _netManager.UnKillClient(client);
-        Clients.ClearAndAddRange(_netManager.GetClients());
+        UpdateClients();
     }
 
     public void KilAllClients()
     {
-        if (Clients.Count == 0) return;
+        if (Clients.Length == 0) return;
         foreach (var client in Clients)
         {
             _netManager.KillClient(client);
         }
-        Clients.ClearAndAddRange(_netManager.GetClients());
+        UpdateClients();
     }
 
     public void UnKilAllClients()
     {
-        if (Clients.Count == 0) return;
+        if (Clients.Length == 0) return;
         foreach (var client in Clients)
         {
             _netManager.UnKillClient(client);
         }
-        Clients.ClearAndAddRange(_netManager.GetClients());
+        UpdateClients();
     }
 
     public DataTable GetTableData()
@@ -81,14 +81,20 @@ public class MainController
 
         foreach (var client in Clients)
         {
-            dt.Rows.Add(client.Name, client.Ip, client.Mac.GetFormattedAddress(), client.IsKilled, client.Vendor, client.LastArpTime);
+            dt.Rows.Add(client.Name, client.Ip, client.Mac.GetFormattedAddress(), client.IsKilled, client.Vendor, client.IsOnline ? "Online" : client.LastArpTime);
         }
 
         return dt;
     }
 
+    private void UpdateClients()
+    {
+        Clients = _netManager.GetClients();
+        ClientsChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     public void OnClientsChanged(object? obj, EventArgs e)
     {
-        Clients.ClearAndAddRange(_netManager.GetClients());
+        UpdateClients();
     }
 }

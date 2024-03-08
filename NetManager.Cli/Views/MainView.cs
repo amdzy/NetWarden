@@ -14,7 +14,7 @@ namespace NetManager.Cli.Views
             InitializeComponent();
             _mainController = mainController;
 
-            _mainController.Clients.CollectionChanged += OnCollectionChanged;
+            _mainController.ClientsChanged += OnCollectionChanged;
 
             killBtn.Clicked += OnKillBtn;
             unKillBtn.Clicked += OnUnKillBtn;
@@ -84,7 +84,7 @@ namespace NetManager.Cli.Views
 
         public void UpdateButtons()
         {
-            if (_mainController.Clients.Count == 0)
+            if (_mainController.Clients.Length == 0)
             {
                 killBtn.Visible = false;
                 unKillBtn.Visible = false;
@@ -119,7 +119,7 @@ namespace NetManager.Cli.Views
             _mainController.Exit();
         }
 
-        private void OnCollectionChanged(object? obj, NotifyCollectionChangedEventArgs e)
+        private void OnCollectionChanged(object? obj, EventArgs e)
         {
             UpdateTable();
         }
