@@ -8,7 +8,7 @@ namespace NetManager.Core.Services;
 
 public class NameResolver
 {
-    public IEnumerable<Vendor>? Vendors { get; }
+    public IList<Vendor>? Vendors { get; }
     public NameResolver()
     {
         if (Vendors is null)

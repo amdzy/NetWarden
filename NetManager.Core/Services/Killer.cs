@@ -19,7 +19,7 @@ internal class Killer
 
     public void Start()
     {
-        _device ??= _deviceManager.CreateDevice("ip", null);
+        _device ??= _deviceManager.CreateDevice("arp", null);
     }
 
     public void Kill(Client victim)
