@@ -26,7 +26,7 @@ public class NetManager
             throw new NotSupportedException("No supported device was found");
         }
         HostInfo.SetHostInfo(device);
-        _deviceManager = new DeviceManager();
+        _deviceManager = new DeviceManager(device);
         _nameResolver = new NameResolver();
         _scanner = new Scanner(_deviceManager, _nameResolver);
         _killer = new Killer(_scanner, _deviceManager);
@@ -36,7 +36,7 @@ public class NetManager
     {
         try
         {
-            _killer.Start();
+            _deviceManager.Start();
             _scanner.Start();
         }
         catch (PcapException ex)

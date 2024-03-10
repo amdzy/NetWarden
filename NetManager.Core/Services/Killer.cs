@@ -8,18 +8,12 @@ internal class Killer
 {
     private Scanner _scanner;
     private DeviceManager _deviceManager;
-    private LibPcapLiveDevice? _device;
 
     public Killer(Scanner scanner, DeviceManager deviceManager)
     {
         _scanner = scanner;
         _deviceManager = deviceManager;
 
-    }
-
-    public void Start()
-    {
-        _device ??= _deviceManager.CreateDevice("arp", null);
     }
 
     public void Kill(Client victim)
@@ -66,6 +60,6 @@ internal class Killer
         {
             PayloadPacket = arpPacket
         };
-        _device?.SendPacket(etherPacket.Bytes);
+        _deviceManager.SendPacket(etherPacket);
     }
 }

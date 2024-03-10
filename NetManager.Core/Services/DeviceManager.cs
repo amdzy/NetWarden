@@ -1,31 +1,65 @@
-﻿using SharpPcap;
+﻿using PacketDotNet;
+using SharpPcap;
 using SharpPcap.LibPcap;
 
 namespace NetManager.Core.Services;
 
-public class DeviceManager
+public class DeviceManager : IDisposable
 {
-    private string GetAdapterName(string? adapterName = null)
+    private LibPcapLiveDevice _device;
+
+    public DeviceManager(LibPcapLiveDevice device)
     {
-        return (from device in LibPcapLiveDeviceList.Instance
-                where device.Interface.FriendlyName == (adapterName ?? HostInfo.NetworkAdapterName)
-                select device).ToList()[0].Name;
+        _device = device;
     }
 
-    public LibPcapLiveDevice CreateDevice(
-        string filter,
-        PacketArrivalEventHandler? packetArrivalHandler,
-        int readTimeout = 1000,
-        string? adapterName = null)
+    public LibPcapLiveDevice GetDevice()
     {
-        var device = LibPcapLiveDeviceList.New()[GetAdapterName(adapterName)];
-        device.Open(DeviceModes.Promiscuous, readTimeout);
-        device!.Filter = filter;
-        if (packetArrivalHandler is not null)
-        {
-            device.OnPacketArrival += packetArrivalHandler;
-        }
+        return _device;
+    }
 
-        return device;
+    public void Start()
+    {
+        if (_device is null || _device.Opened == true) return;
+        int readTimeout = 1000;
+        _device.Open(DeviceModes.Promiscuous, readTimeout);
+        _device.Filter = "arp";
+        StartCapture();
+    }
+
+    public void StartCapture()
+    {
+        _device?.StartCapture();
+    }
+
+    public void StopCapture()
+    {
+        _device?.StopCapture();
+    }
+
+    public void RegisterOnPacketArrival(PacketArrivalEventHandler handler)
+    {
+        if (_device is null) return;
+        _device.OnPacketArrival += handler;
+    }
+
+    public void RemoveOnPacketArrival(PacketArrivalEventHandler handler)
+    {
+        if (_device is null) return;
+        _device.OnPacketArrival -= handler;
+    }
+
+    public void SendPacket(EthernetPacket packet)
+    {
+        if (_device is null) return;
+        _device.SendPacket(packet.Bytes);
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+
+        StopCapture();
+        _device?.Close();
     }
 }

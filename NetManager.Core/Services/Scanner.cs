@@ -10,7 +10,6 @@ namespace NetManager.Core.Services;
 
 internal class Scanner : IDisposable
 {
-    private LibPcapLiveDevice? _device;
     private DeviceManager _deviceManager;
     private NameResolver _nameResolver;
     private ConcurrentDictionary<string, Client> _clients = [];
@@ -26,18 +25,16 @@ internal class Scanner : IDisposable
         _deviceManager = deviceManager;
         _nameResolver = nameResolver;
         _cancellationTokenSource = new CancellationTokenSource();
+        _deviceManager.RegisterOnPacketArrival(OnPacketArrival);
     }
 
     public void Start()
     {
         if (!IsRunning)
         {
-            _device ??= _deviceManager.CreateDevice("arp", OnPacketArrival);
-
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource = new CancellationTokenSource();
             IsRunning = true;
-            _device?.StartCapture();
             ProbeDevices();
         }
         StartBackgroundScan();
@@ -86,8 +83,8 @@ internal class Scanner : IDisposable
     {
         _cancellationTokenSource?.Cancel();
         IsRunning = false;
-        _device?.StopCapture();
         StopBackgroundScan();
+        _deviceManager.RemoveOnPacketArrival(OnPacketArrival);
     }
 
     public ConcurrentDictionary<string, Client> GetClients()
@@ -126,27 +123,28 @@ internal class Scanner : IDisposable
 
     private void ProbeDevices()
     {
+        var device = _deviceManager.GetDevice();
         Task.Run(() =>
         {
             for (int i = 1; i <= 255; i++)
             {
-                if (_device == null || _device.Opened == false)
+                if (device == null || device.Opened == false)
                     break;
                 var targetIp = IPAddress.Parse(HostInfo.RootIp + i);
                 var arpPacket = new ArpPacket(ArpOperation.Request,
                     targetHardwareAddress: HostInfo.EmptyMac,
                     targetProtocolAddress: targetIp,
-                    senderHardwareAddress: _device.MacAddress,
+                    senderHardwareAddress: HostInfo.HostMac,
                     senderProtocolAddress: HostInfo.HostIp);
 
                 var ethernetPacket = new EthernetPacket(
-                    sourceHardwareAddress: _device.MacAddress,
+                    sourceHardwareAddress: HostInfo.HostMac,
                     destinationHardwareAddress: HostInfo.BroadcastMac,
                     EthernetType.Arp)
                 {
                     PayloadPacket = arpPacket
                 };
-                _device.SendPacket(ethernetPacket);
+                device.SendPacket(ethernetPacket);
             }
         });
     }
@@ -184,11 +182,5 @@ internal class Scanner : IDisposable
         GC.SuppressFinalize(this);
 
         Stop();
-        if (_device != null)
-        {
-            _device.StopCapture();
-            _device.OnPacketArrival -= OnPacketArrival;
-            _device.Dispose();
-        }
     }
 }
