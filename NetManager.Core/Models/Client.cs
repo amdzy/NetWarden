@@ -9,7 +9,7 @@ public class Client
     public IPAddress Ip { get; }
     public PhysicalAddress Mac { get; }
     public DateTime DateAdded { get; } = DateTime.UtcNow;
-    public bool HasFriendlyName { get; private set; }
+    public bool HasNickname { get; private set; }
     public bool IsKilled { get; internal set; }
     public string Name { get; internal set; }
     public string Vendor { get; internal set; }
@@ -30,4 +30,23 @@ public class Client
     public void UpdateLastArpTime() => LastArpTime = DateTime.UtcNow;
     public bool IsGateway() => Ip!.Equals(HostInfo.GatewayIp);
     public bool IsLocalDevice() => Mac!.Equals(HostInfo.HostMac);
+    public void SetNickName(string name)
+    {
+        HasNickname = true;
+        Name = name;
+    }
+
+    public SerializedClient ToSerializedClient()
+    {
+        return new SerializedClient
+        {
+            Ip = Ip.ToString(),
+            Mac = Mac.ToString(),
+            DateAdded = DateAdded,
+            HasNickname = HasNickname,
+            Name = Name,
+            Vendor = Vendor,
+            Type = Type
+        };
+    }
 }

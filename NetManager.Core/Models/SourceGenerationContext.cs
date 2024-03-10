@@ -5,8 +5,8 @@ namespace NetManager.Core.Models;
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(Vendor))]
 [JsonSerializable(typeof(List<Vendor>))]
-[JsonSerializable(typeof(Client))]
-[JsonSerializable(typeof(List<Client>))]
+[JsonSerializable(typeof(SerializedClient))]
+[JsonSerializable(typeof(List<SerializedClient>))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }

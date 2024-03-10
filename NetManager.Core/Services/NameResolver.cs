@@ -36,16 +36,46 @@ public class NameResolver
     {
         try
         {
-            var host = Dns.GetHostEntry(client.Ip);
+            var clients = DataStore.LoadClients();
+            foreach (var c in clients)
+            {
+                if (c.Mac == client.Mac.ToString() && c.HasNickname)
+                {
+                    client.Name = c.Name;
+                    return;
+                }
+            }
 
+            var host = Dns.GetHostEntry(client.Ip);
             if (host?.HostName is not null)
             {
                 client.Name = host.HostName;
             }
         }
-        catch
+        catch { }
+    }
+
+    public void UpdateClientName(Client client, string name)
+    {
+        try
         {
-            // Console.WriteLine("Failed to resolve client name");
+            client.SetNickName(name);
+            var clients = DataStore.LoadClients();
+            var foundAndUpdated = false;
+            for (int i = 0; i < clients.Count; i++)
+            {
+                if (clients[i].Mac == client.Mac.ToString())
+                {
+                    clients[i] = client.ToSerializedClient();
+                    foundAndUpdated = true;
+                }
+            }
+            if (!foundAndUpdated)
+            {
+                clients.Add(client.ToSerializedClient());
+            }
+            DataStore.SaveClients(clients);
         }
+        catch { }
     }
 }

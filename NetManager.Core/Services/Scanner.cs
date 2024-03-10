@@ -92,6 +92,15 @@ internal class Scanner : IDisposable
         return _clients;
     }
 
+    public void UpdateClientName(Client client, string name)
+    {
+        if (_clients.TryGetValue(client.Mac.ToString(), out client!))
+        {
+            client.SetNickName(name);
+            ClientsChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     private void ProcessPacket(RawCapture rawCapture)
     {
         Packet packet = Packet.ParsePacket(rawCapture.LinkLayerType, rawCapture.Data);

@@ -82,6 +82,12 @@ public class NetManager
         _killer.UnKill(client);
     }
 
+    public void UpdateClientName(Client client, string name)
+    {
+        _scanner.UpdateClientName(client, name);
+        _nameResolver.UpdateClientName(client, name);
+    }
+
     public static IList<LibPcapLiveDevice> ListDevices()
     {
         LibPcapLiveDeviceList captureDeviceList = LibPcapLiveDeviceList.Instance;
