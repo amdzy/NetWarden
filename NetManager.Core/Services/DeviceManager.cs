@@ -8,8 +8,10 @@ public class DeviceManager : IDisposable
 {
     private LibPcapLiveDevice _device;
 
-    public DeviceManager(LibPcapLiveDevice device)
+    public DeviceManager()
     {
+        var device = (NetManager.ListDevices()?[0]) ?? throw new NotSupportedException("No supported device was found");
+        HostInfo.SetHostInfo(device);
         _device = device;
     }
 

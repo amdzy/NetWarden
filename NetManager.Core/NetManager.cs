@@ -20,13 +20,7 @@ public class NetManager
 
     public NetManager()
     {
-        var device = ListDevices()?[0];
-        if (device is null)
-        {
-            throw new NotSupportedException("No supported device was found");
-        }
-        HostInfo.SetHostInfo(device);
-        _deviceManager = new DeviceManager(device);
+        _deviceManager = new DeviceManager();
         _nameResolver = new NameResolver();
         _scanner = new Scanner(_deviceManager, _nameResolver);
         _killer = new Killer(_scanner, _deviceManager);
