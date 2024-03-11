@@ -23,6 +23,16 @@ namespace NetManager.Cli.Views {
         
         private Terminal.Gui.TableView tableView;
         
+        private Terminal.Gui.View updateNameView;
+        
+        private Terminal.Gui.Label newNameLabel;
+        
+        private Terminal.Gui.TextField newNameField;
+        
+        private Terminal.Gui.Button setNameBtn;
+        
+        private Terminal.Gui.Button cancelSetNameBtn;
+        
         private Terminal.Gui.LineView lineView;
         
         private Terminal.Gui.Button refreshBtn;
@@ -35,16 +45,24 @@ namespace NetManager.Cli.Views {
         
         private Terminal.Gui.Button unKillBtn;
         
+        private Terminal.Gui.Button openNameViewBtn;
+        
         private Terminal.Gui.Button exitBtn;
         
         private void InitializeComponent() {
             this.exitBtn = new Terminal.Gui.Button();
+            this.openNameViewBtn = new Terminal.Gui.Button();
             this.unKillBtn = new Terminal.Gui.Button();
             this.killBtn = new Terminal.Gui.Button();
             this.unKillAllBtn = new Terminal.Gui.Button();
             this.killAllBtn = new Terminal.Gui.Button();
             this.refreshBtn = new Terminal.Gui.Button();
             this.lineView = new Terminal.Gui.LineView();
+            this.cancelSetNameBtn = new Terminal.Gui.Button();
+            this.setNameBtn = new Terminal.Gui.Button();
+            this.newNameField = new Terminal.Gui.TextField();
+            this.newNameLabel = new Terminal.Gui.Label();
+            this.updateNameView = new Terminal.Gui.View();
             this.tableView = new Terminal.Gui.TableView();
             this.tgDefault = new Terminal.Gui.ColorScheme();
             this.tgDefault.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.White, Terminal.Gui.Color.Blue);
@@ -117,6 +135,53 @@ namespace NetManager.Cli.Views {
             tableViewTable.Columns.Add(tableViewTableVendor);
             this.tableView.Table = tableViewTable;
             this.Add(this.tableView);
+            this.updateNameView.Width = Dim.Fill(0);
+            this.updateNameView.Height = Dim.Fill(0);
+            this.updateNameView.X = Pos.Center();
+            this.updateNameView.Y = Pos.Center();
+            this.updateNameView.Visible = false;
+            this.updateNameView.Data = "updateNameView";
+            this.updateNameView.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.Add(this.updateNameView);
+            this.newNameLabel.Width = 8;
+            this.newNameLabel.Height = 1;
+            this.newNameLabel.X = 2;
+            this.newNameLabel.Y = 2;
+            this.newNameLabel.Visible = true;
+            this.newNameLabel.Data = "newNameLabel";
+            this.newNameLabel.Text = "New Name:";
+            this.newNameLabel.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.updateNameView.Add(this.newNameLabel);
+            this.newNameField.Width = Dim.Fill(5);
+            this.newNameField.Height = 1;
+            this.newNameField.X = 2;
+            this.newNameField.Y = 4;
+            this.newNameField.Visible = true;
+            this.newNameField.Secret = false;
+            this.newNameField.Data = "newNameField";
+            this.newNameField.Text = "";
+            this.newNameField.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.updateNameView.Add(this.newNameField);
+            this.setNameBtn.Width = 10;
+            this.setNameBtn.Height = 1;
+            this.setNameBtn.X = Pos.Percent(2f);
+            this.setNameBtn.Y = Pos.AnchorEnd(4);
+            this.setNameBtn.Visible = true;
+            this.setNameBtn.Data = "setNameBtn";
+            this.setNameBtn.Text = "Update";
+            this.setNameBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.setNameBtn.IsDefault = false;
+            this.updateNameView.Add(this.setNameBtn);
+            this.cancelSetNameBtn.Width = 10;
+            this.cancelSetNameBtn.Height = 1;
+            this.cancelSetNameBtn.X = Pos.Right(setNameBtn) + 2;
+            this.cancelSetNameBtn.Y = Pos.AnchorEnd(4);
+            this.cancelSetNameBtn.Visible = true;
+            this.cancelSetNameBtn.Data = "cancelSetNameBtn";
+            this.cancelSetNameBtn.Text = "Cancel";
+            this.cancelSetNameBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.cancelSetNameBtn.IsDefault = false;
+            this.updateNameView.Add(this.cancelSetNameBtn);
             this.lineView.Width = Dim.Fill(0);
             this.lineView.Height = 1;
             this.lineView.X = 0;
@@ -177,6 +242,16 @@ namespace NetManager.Cli.Views {
             this.unKillBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
             this.unKillBtn.IsDefault = false;
             this.Add(this.unKillBtn);
+            this.openNameViewBtn.Width = 15;
+            this.openNameViewBtn.Height = 1;
+            this.openNameViewBtn.X = Pos.AnchorEnd(26);
+            this.openNameViewBtn.Y = Pos.Bottom(lineView);
+            this.openNameViewBtn.Visible = true;
+            this.openNameViewBtn.Data = "openNameViewBtn";
+            this.openNameViewBtn.Text = "Update Name";
+            this.openNameViewBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.openNameViewBtn.IsDefault = false;
+            this.Add(this.openNameViewBtn);
             this.exitBtn.Width = 8;
             this.exitBtn.Height = 1;
             this.exitBtn.X = Pos.AnchorEnd(10);

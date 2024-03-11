@@ -1,8 +1,6 @@
 namespace NetManager.Cli.Views
 {
-    using System.Collections.Specialized;
     using NetManager.Cli.Controllers;
-    using NetManager.Core.Exceptions;
     using Terminal.Gui;
 
     public partial class MainView
@@ -22,6 +20,10 @@ namespace NetManager.Cli.Views
             killAllBtn.Clicked += OnKillAllBtn;
             refreshBtn.Clicked += OnRefreshBtn;
             exitBtn.Clicked += OnExitBtn;
+
+            openNameViewBtn.Clicked += OnOpenNameView;
+            cancelSetNameBtn.Clicked += OnCloseNameView;
+            setNameBtn.Clicked += OnSetNameBtn;
 
             refreshBtn.Visible = false;
 
@@ -90,6 +92,7 @@ namespace NetManager.Cli.Views
                 unKillBtn.Visible = false;
                 unKillAllBtn.Visible = false;
                 killAllBtn.Visible = false;
+                setNameBtn.Visible = false;
                 return;
             }
             else
@@ -111,6 +114,7 @@ namespace NetManager.Cli.Views
                     killBtn.Visible = true;
                     unKillBtn.Visible = false;
                 }
+                setNameBtn.Visible = true;
             }
         }
 
@@ -118,6 +122,25 @@ namespace NetManager.Cli.Views
         {
             _mainController.Exit();
         }
+
+        public void OnOpenNameView()
+        {
+            newNameField.Clear();
+            updateNameView.Visible = true;
+        }
+
+        public void OnCloseNameView()
+        {
+            updateNameView.Visible = false;
+        }
+
+        public void OnSetNameBtn()
+        {
+            var newName = newNameField.Text.ToString() ?? "";
+            _mainController.UpdateClientName(tableView.SelectedRow, newName);
+            OnCloseNameView();
+        }
+
 
         private void OnCollectionChanged(object? obj, EventArgs e)
         {

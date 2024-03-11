@@ -68,6 +68,15 @@ public class MainController
         UpdateClients();
     }
 
+    public void UpdateClientName(int row, string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return;
+        if (row < 0 || row > Clients.Length) return;
+        var client = Clients[row];
+        if (client is null) return;
+        _netManager.UpdateClientName(client, name);
+    }
+
     public DataTable GetTableData()
     {
         var dt = new DataTable();
