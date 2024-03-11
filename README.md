@@ -8,6 +8,7 @@
   <a href="#features">Features</a> &bull;
   <a href="#prerequisites">Prerequisites</a> &bull;
   <a href="#download">Download</a> &bull;
+  <a href="#build">Build</a> &bull;
   <a href="#todo">TODO</a> &bull;
   <a href="#contributing">Contributing</a> &bull;
   <a href="#license">License</a>
