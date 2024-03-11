@@ -92,7 +92,7 @@ namespace NetManager.Cli.Views
                 unKillBtn.Visible = false;
                 unKillAllBtn.Visible = false;
                 killAllBtn.Visible = false;
-                setNameBtn.Visible = false;
+                openNameViewBtn.Visible = false;
                 return;
             }
             else
@@ -114,7 +114,7 @@ namespace NetManager.Cli.Views
                     killBtn.Visible = true;
                     unKillBtn.Visible = false;
                 }
-                setNameBtn.Visible = true;
+                openNameViewBtn.Visible = true;
             }
         }
 
