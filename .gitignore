@@ -419,6 +419,7 @@ aclocal.m4
 install-sh
 autom4te.cache/
 *.tar.gz
+*.zip
 tarballs/
 test-results/
 
