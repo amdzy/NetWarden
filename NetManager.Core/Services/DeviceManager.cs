@@ -10,9 +10,21 @@ public class DeviceManager : IDisposable
 
     public DeviceManager()
     {
-        var device = (NetManager.ListDevices()?[0]) ?? throw new NotSupportedException("No supported device was found");
-        HostInfo.SetHostInfo(device);
-        _device = device;
+        var devices = NetManager.ListDevices();
+        foreach (var d in devices)
+        {
+            foreach (var addr in d.Interface.GatewayAddresses)
+            {
+                if (addr.ToString().StartsWith("192"))
+                {
+                    Console.WriteLine("Got Here");
+                    _device = d;
+                    break;
+                }
+            }
+        }
+        if (_device is null) throw new NotSupportedException("No supported device was found");
+        HostInfo.SetHostInfo(_device);
     }
 
     public LibPcapLiveDevice GetDevice()
