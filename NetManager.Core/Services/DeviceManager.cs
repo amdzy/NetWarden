@@ -17,7 +17,6 @@ public class DeviceManager : IDisposable
             {
                 if (addr.ToString().StartsWith("192"))
                 {
-                    Console.WriteLine("Got Here");
                     _device = d;
                     break;
                 }
