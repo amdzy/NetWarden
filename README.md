@@ -22,7 +22,7 @@
 
 ## Overview
 
-NetManager is a network management tool written in C# that provides a range of features for monitoring and controlling devices on the same network. Its primary functionalities include displaying connected devices, cutting or restoring individual devices, cutting or restoring all devices, and assigning persistent nicknames to each device.
+NetManager is a network management tool written in C# that provides a range of features for monitoring and controlling devices on the same network. Its primary functionalities include displaying connected devices, cutting or restoring individual devices, Background scanning for connected devices, and more to come.
 
 ## Features
 
