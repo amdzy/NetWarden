@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace NetManager.Core.Extensions;
+namespace NetWarden.Core.Extensions;
 
 public static class IpAddressExtensions
 {

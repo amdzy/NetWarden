@@ -2,7 +2,7 @@
 using SharpPcap;
 using SharpPcap.LibPcap;
 
-namespace NetManager.Core.Services;
+namespace NetWarden.Core.Services;
 
 public class DeviceManager : IDisposable
 {
@@ -10,7 +10,7 @@ public class DeviceManager : IDisposable
 
     public DeviceManager()
     {
-        var devices = NetManager.ListDevices();
+        var devices = NetWarden.ListDevices();
         foreach (var d in devices)
         {
             foreach (var addr in d.Interface.GatewayAddresses)

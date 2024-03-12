@@ -1,6 +1,6 @@
-namespace NetManager.Cli.Views
+namespace NetWarden.Cli.Views
 {
-    using NetManager.Core.Exceptions;
+    using NetWarden.Core.Exceptions;
     using Terminal.Gui;
 
 

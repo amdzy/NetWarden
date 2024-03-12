@@ -1,12 +1,12 @@
 ﻿using System.Collections.Concurrent;
 using System.Net;
 using System.Timers;
-using NetManager.Core.Models;
+using NetWarden.Core.Models;
 using PacketDotNet;
 using SharpPcap;
 using SharpPcap.LibPcap;
 
-namespace NetManager.Core.Services;
+namespace NetWarden.Core.Services;
 
 internal class Scanner : IDisposable
 {

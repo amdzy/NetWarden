@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
-using NetManager.Core.Services;
+using NetWarden.Core.Services;
 
-namespace NetManager.Core.Models;
+namespace NetWarden.Core.Models;
 
 public class Client
 {

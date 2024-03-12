@@ -1,4 +1,4 @@
-# NetManager
+# NetWarden
 
 ---
 
@@ -22,7 +22,7 @@
 
 ## Overview
 
-NetManager is a network management tool written in C# that provides a range of features for monitoring and controlling devices on the same network. Its primary functionalities include displaying connected devices, cutting or restoring individual devices, Background scanning for connected devices, and more to come.
+NetWarden is a network management tool written in C# that provides a range of features for monitoring and controlling devices on the same network. Its primary functionalities include displaying connected devices, cutting or restoring individual devices, Background scanning for connected devices, and more to come.
 
 ## Features
 
@@ -35,23 +35,23 @@ NetManager is a network management tool written in C# that provides a range of f
 
 ## Prerequisites
 
-Before running NetManager, make sure to have the following dependencies installed:
+Before running NetWarden, make sure to have the following dependencies installed:
 
 - **For Linux/Mac:** [libpcap](https://www.tcpdump.org/)
 - **For Windows:** [Npcap](https://npcap.org/)
 
 ## Download
 
-Download the latest binary from the [release page](https://github.com/soul-remix/NetManager/releases).
+Download the latest binary from the [release page](https://github.com/soul-remix/NetWarden/releases).
 
 ## Build
 
-If you prefer to build NetManager from the source code, follow these steps: 
+If you prefer to build NetWarden from the source code, follow these steps:
 
-- Clone the repository:  `git clone https://github.com/Soul-Remix/NetManager.git`
-- Navigate to the project directory:  `cd NetManager`
-- Restore the application:  `dotnet restore`
-- Build the app:  `dotnet publish -c Release`
+- Clone the repository: `git clone https://github.com/Soul-Remix/NetWarden.git`
+- Navigate to the project directory: `cd NetWarden`
+- Restore the application: `dotnet restore`
+- Build the app: `dotnet publish -c Release`
 
 Make sure you have .NET SDK installed on your machine before building from source.
 

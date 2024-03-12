@@ -1,11 +1,11 @@
 ﻿using System.Text.Json;
-using NetManager.Core.Models;
+using NetWarden.Core.Models;
 
-namespace NetManager.Core.Services;
+namespace NetWarden.Core.Services;
 
 public static class DataStore
 {
-    public static string DataPath { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "net-manager"); }
+    public static string DataPath { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NetWarden"); }
 
     public static IList<SerializedClient> LoadClients()
     {

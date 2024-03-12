@@ -8,48 +8,51 @@
 //      the code is regenerated.
 //  </auto-generated>
 // -----------------------------------------------------------------------------
-namespace NetManager.Cli.Views {
+namespace NetWarden.Cli.Views
+{
     using System;
     using Terminal.Gui;
-    
-    
-    public partial class MainView : Terminal.Gui.Window {
-        
+
+
+    public partial class MainView : Terminal.Gui.Window
+    {
+
         private Terminal.Gui.ColorScheme tgDefault;
-        
+
         private Terminal.Gui.ColorScheme greenOnBlack;
-        
+
         private Terminal.Gui.ColorScheme blueOnBlack;
-        
+
         private Terminal.Gui.TableView tableView;
-        
+
         private Terminal.Gui.View updateNameView;
-        
+
         private Terminal.Gui.Label newNameLabel;
-        
+
         private Terminal.Gui.TextField newNameField;
-        
+
         private Terminal.Gui.Button setNameBtn;
-        
+
         private Terminal.Gui.Button cancelSetNameBtn;
-        
+
         private Terminal.Gui.LineView lineView;
-        
+
         private Terminal.Gui.Button refreshBtn;
-        
+
         private Terminal.Gui.Button killAllBtn;
-        
+
         private Terminal.Gui.Button unKillAllBtn;
-        
+
         private Terminal.Gui.Button killBtn;
-        
+
         private Terminal.Gui.Button unKillBtn;
-        
+
         private Terminal.Gui.Button openNameViewBtn;
-        
+
         private Terminal.Gui.Button exitBtn;
-        
-        private void InitializeComponent() {
+
+        private void InitializeComponent()
+        {
             this.exitBtn = new Terminal.Gui.Button();
             this.openNameViewBtn = new Terminal.Gui.Button();
             this.unKillBtn = new Terminal.Gui.Button();

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetManager.Core", "NetManager.Core\NetManager.Core.csproj", "{8F075FC1-20D9-4797-BB71-0447492C4F74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetWarden.Core", "NetWarden.Core\NetWarden.Core.csproj", "{8F075FC1-20D9-4797-BB71-0447492C4F74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetManager.Cli", "NetManager.Cli\NetManager.Cli.csproj", "{489B1583-0ED1-43CC-9231-B2178B93490B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetWarden.Cli", "NetWarden.Cli\NetWarden.Cli.csproj", "{489B1583-0ED1-43CC-9231-B2178B93490B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
-using NetManager.Cli.Controllers;
-using NetManager.Cli.Views;
+using NetWarden.Cli.Controllers;
+using NetWarden.Cli.Views;
 using Terminal.Gui;
 
-namespace NetManager.Cli;
+namespace NetWarden.Cli;
 
 public class Program
 {
@@ -19,8 +19,8 @@ public class Program
 
             Application.Init();
 
-            var netManager = new Core.NetManager();
-            var controller = new MainController(netManager);
+            var netWarden = new Core.NetWarden();
+            var controller = new MainController(netWarden);
             controller.Start();
 
             Application.Run(new MainView(controller));
@@ -51,8 +51,8 @@ public class Program
 
     static void PrintHelp()
     {
-        Console.WriteLine("NetManager - Network Management TUI Tool");
-        Console.WriteLine("Usage: netmanager");
+        Console.WriteLine("NetWarden - Network Management TUI Tool");
+        Console.WriteLine("Usage: netwarden");
         Console.WriteLine();
         Console.WriteLine("Keyboard Shortcuts Inside the TUI:");
         Console.WriteLine("  Alt + R   Refresh");
@@ -70,6 +70,6 @@ public class Program
     static void PrintVersion()
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version;
-        Console.WriteLine($"NetManager version {version!.Major}.{version.Minor}.{version.Build}");
+        Console.WriteLine($"NetWarden version {version!.Major}.{version.Minor}.{version.Build}");
     }
 }

@@ -1,8 +1,8 @@
-﻿using NetManager.Core.Models;
+﻿using NetWarden.Core.Models;
 using PacketDotNet;
 using SharpPcap.LibPcap;
 
-namespace NetManager.Core.Services;
+namespace NetWarden.Core.Services;
 
 internal class Killer
 {

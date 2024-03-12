@@ -1,4 +1,4 @@
-namespace NetManager.Core.Exceptions;
+namespace NetWarden.Core.Exceptions;
 
 public class PlatformNotSupportedException : Exception
 {

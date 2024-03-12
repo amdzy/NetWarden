@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
-using NetManager.Core.Extensions;
+using NetWarden.Core.Extensions;
 using SharpPcap.LibPcap;
 
-namespace NetManager.Core.Services;
+namespace NetWarden.Core.Services;
 
 public class HostInfo
 {

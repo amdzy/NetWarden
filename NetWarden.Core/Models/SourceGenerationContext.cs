@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace NetManager.Core.Models;
+namespace NetWarden.Core.Models;
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(Vendor))]

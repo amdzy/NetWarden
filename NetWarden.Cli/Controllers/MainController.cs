@@ -1,32 +1,32 @@
 using System.Data;
-using NetManager.Core.Extensions;
-using NetManager.Core.Models;
+using NetWarden.Core.Extensions;
+using NetWarden.Core.Models;
 using Terminal.Gui;
 
-namespace NetManager.Cli.Controllers;
+namespace NetWarden.Cli.Controllers;
 
 public class MainController
 {
-    private Core.NetManager _netManager;
+    private Core.NetWarden _netWarden;
 
     public Client[] Clients = [];
     public event EventHandler? ClientsChanged;
 
-    public MainController(Core.NetManager netManager)
+    public MainController(Core.NetWarden netWarden)
     {
-        _netManager = netManager;
+        _netWarden = netWarden;
 
-        _netManager.ClientsChanged += OnClientsChanged;
+        _netWarden.ClientsChanged += OnClientsChanged;
     }
 
     public void Start()
     {
-        _netManager?.Start();
+        _netWarden?.Start();
     }
 
     public void Exit()
     {
-        _netManager.StopScan();
+        _netWarden.StopScan();
         Application.RequestStop();
     }
 
@@ -35,7 +35,7 @@ public class MainController
         if (row < 0 || row > Clients.Length) return;
         var client = Clients[row];
         if (client is null) return;
-        _netManager.KillClient(client);
+        _netWarden.KillClient(client);
         UpdateClients();
     }
 
@@ -44,7 +44,7 @@ public class MainController
         if (row < 0 || row > Clients.Length) return;
         var client = Clients[row];
         if (client is null) return;
-        _netManager.UnKillClient(client);
+        _netWarden.UnKillClient(client);
         UpdateClients();
     }
 
@@ -53,7 +53,7 @@ public class MainController
         if (Clients.Length == 0) return;
         foreach (var client in Clients)
         {
-            _netManager.KillClient(client);
+            _netWarden.KillClient(client);
         }
         UpdateClients();
     }
@@ -63,7 +63,7 @@ public class MainController
         if (Clients.Length == 0) return;
         foreach (var client in Clients)
         {
-            _netManager.UnKillClient(client);
+            _netWarden.UnKillClient(client);
         }
         UpdateClients();
     }
@@ -74,7 +74,7 @@ public class MainController
         if (row < 0 || row > Clients.Length) return;
         var client = Clients[row];
         if (client is null) return;
-        _netManager.UpdateClientName(client, name);
+        _netWarden.UpdateClientName(client, name);
     }
 
     public DataTable GetTableData()
@@ -98,7 +98,7 @@ public class MainController
 
     private void UpdateClients()
     {
-        Clients = _netManager.GetClients();
+        Clients = _netWarden.GetClients();
         ClientsChanged?.Invoke(this, EventArgs.Empty);
     }
 

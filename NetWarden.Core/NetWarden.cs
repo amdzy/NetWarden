@@ -1,12 +1,12 @@
-﻿using NetManager.Core.Exceptions;
-using NetManager.Core.Models;
-using NetManager.Core.Services;
+﻿using NetWarden.Core.Exceptions;
+using NetWarden.Core.Models;
+using NetWarden.Core.Services;
 using SharpPcap;
 using SharpPcap.LibPcap;
 
-namespace NetManager.Core;
+namespace NetWarden.Core;
 
-public class NetManager
+public class NetWarden
 {
     private Scanner _scanner;
     private DeviceManager _deviceManager;
@@ -18,7 +18,7 @@ public class NetManager
         remove => _scanner.ClientsChanged -= value;
     }
 
-    public NetManager()
+    public NetWarden()
     {
         _deviceManager = new DeviceManager();
         _nameResolver = new NameResolver();

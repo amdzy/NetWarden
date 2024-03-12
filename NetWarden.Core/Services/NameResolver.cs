@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Reflection;
 using System.Text.Json;
-using NetManager.Core.Extensions;
-using NetManager.Core.Models;
+using NetWarden.Core.Extensions;
+using NetWarden.Core.Models;
 
-namespace NetManager.Core.Services;
+namespace NetWarden.Core.Services;
 
 public class NameResolver
 {

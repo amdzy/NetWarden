@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace NetManager.Core.Models;
+namespace NetWarden.Core.Models;
 
 public class Vendor
 {

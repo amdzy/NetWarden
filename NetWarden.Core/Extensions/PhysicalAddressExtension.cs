@@ -1,6 +1,6 @@
 using System.Net.NetworkInformation;
 
-namespace NetManager.Core.Extensions;
+namespace NetWarden.Core.Extensions;
 
 public static class PhysicalAddressExtensions
 {
