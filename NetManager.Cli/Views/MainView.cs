@@ -38,6 +38,10 @@ namespace NetManager.Cli.Views
                 await Task.Delay(2000);
                 refreshBtn.Visible = true;
             });
+
+            killAllBtn.HotKey = Key.A;
+            unKillBtn.HotKey = Key.S;
+            unKillAllBtn.HotKey = Key.D;
         }
 
         public void OnKillBtn()
