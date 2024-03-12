@@ -24,7 +24,7 @@ publish/cli/all: publish/cli/linux/x64 publish/cli/osx/x64 publish/cli/win/x64
 publish/cli/linux/x64:
 	dotnet publish -c Release -r linux-x64 -o ${ARTIFACT_FOLDER}  $(CLI_PROJECT_NAME)
 	mv ${ARTIFACT_FOLDER}/NetManager.Cli ${ARTIFACT_FOLDER}/netManager
-	tar czf ${ARTIFACT_FOLDER}/NetManager_linx_x64.tar.gz -C ${ARTIFACT_FOLDER} netManager
+	tar czf ${ARTIFACT_FOLDER}/NetManager_linux_x64.tar.gz -C ${ARTIFACT_FOLDER} netManager
 	rm ${ARTIFACT_FOLDER}/netManager
 
 ## publish/cli/osx/x64: Publish the cli app for osx-x64
