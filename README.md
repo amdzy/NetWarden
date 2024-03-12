@@ -16,10 +16,6 @@
 
 ---
 
-## Disclaimer
-
-**The use of this software is done at your own discretion and risk and with agreement that you will be solely responsible for any damage to your/others computer system or loss of data that may/will result from such activities.**
-
 ## Overview
 
 NetWarden is a network management tool written in C# that provides a range of features for monitoring and controlling devices on the same network. Its primary functionalities include displaying connected devices, cutting or restoring individual devices, Background scanning for connected devices, and more to come.
