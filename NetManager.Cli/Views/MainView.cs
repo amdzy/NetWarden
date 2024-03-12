@@ -129,7 +129,7 @@ namespace NetManager.Cli.Views
 
         public void OnOpenNameView()
         {
-            newNameField.Clear();
+            newNameField.Text = "";
             updateNameView.Visible = true;
         }
 

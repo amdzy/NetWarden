@@ -90,7 +90,7 @@ public class MainController
 
         foreach (var client in Clients)
         {
-            dt.Rows.Add(client.Name, client.Ip, client.Mac.GetFormattedAddress(), client.IsKilled, client.Vendor, client.IsOnline ? "Online" : client.LastArpTime);
+            dt.Rows.Add(client.Name, client.Ip, client.Mac.GetFormattedAddress(), client.IsKilled ? "Yes" : "No", client.Vendor, client.IsOnline ? "Online" : client.LastArpTime);
         }
 
         return dt;
