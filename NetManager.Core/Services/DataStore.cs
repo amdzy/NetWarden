@@ -25,7 +25,7 @@ public static class DataStore
         CheckDataDirCreated();
         var path = Path.Combine(DataPath, "data", "clients.json");
 
-        using var fileStream = File.Open(path, FileMode.OpenOrCreate, FileAccess.Write);
+        using var fileStream = File.Open(path, FileMode.Create, FileAccess.Write);
 
         JsonSerializer.Serialize(fileStream, clients, typeof(List<SerializedClient>), SourceGenerationContext.Default);
     }
