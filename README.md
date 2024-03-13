@@ -3,7 +3,6 @@
 ---
 
 <p align="center">
-  <a href="#disclaimer">Disclaimer</a> &bull;
   <a href="#overview">Overview</a> &bull;
   <a href="#features">Features</a> &bull;
   <a href="#prerequisites">Prerequisites</a> &bull;
@@ -38,7 +37,7 @@ Before running NetWarden, make sure to have the following dependencies installed
 
 ## Download
 
-Download the latest binary from the [release page](https://github.com/soul-remix/NetWarden/releases).
+You can download the latest binary from the [release page](https://github.com/soul-remix/NetWarden/releases).
 
 ## Build
 
@@ -53,9 +52,9 @@ Make sure you have .NET SDK installed on your machine before building from sourc
 
 ## TODO
 
-- Ability to defend against spoofing attacks.
-- Limit download and upload speed for devices.
-- Create a GUI for the application.
+- [ ] Ability to defend against spoofing attacks.
+- [ ] Limit download and upload speed for devices.
+- [ ] Create a GUI for the application.
 
 ## Contributing
 
