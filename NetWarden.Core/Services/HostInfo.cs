@@ -27,7 +27,7 @@ public class HostInfo
         }
         NetworkAdapterName = device.Interface.FriendlyName;
         HostMac = device.MacAddress;
-        GatewayIp = device.Interface.GatewayAddresses[0];
+        GatewayIp = device.Interface.GatewayAddresses.Count > 0 ? device.Interface.GatewayAddresses[0] : null;
     }
 
     public static string? RootIp => HostIp!.GetRootIp();
