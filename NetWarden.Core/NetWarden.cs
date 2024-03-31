@@ -47,6 +47,15 @@ public class NetWarden
         }
     }
 
+    public void Restart()
+    {
+        _deviceManager = new DeviceManager();
+        _scanner = new Scanner(_deviceManager, _nameResolver);
+        _killer = new Killer(_scanner, _deviceManager);
+
+        Start();
+    }
+
     public void StopScan()
     {
         _scanner.Stop();
