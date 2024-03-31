@@ -94,4 +94,27 @@ public class NetWarden
         captureDeviceList.Refresh();
         return captureDeviceList.Where(x => x.Addresses.Any(x => x.Addr.type == Sockaddr.AddressTypes.AF_INET_AF_INET6 && x.Addr?.ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)).ToList();
     }
+
+    public static void SetDevice(string name)
+    {
+        var devices = ListDevices();
+        var found = false;
+        foreach (var device in devices)
+        {
+            if (device.Name == name)
+            {
+                var d = new Device
+                {
+                    Name = device.Name
+                };
+                DataStore.SaveDevice(d);
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            throw new Exception("Invalid device name");
+        }
+    }
 }
