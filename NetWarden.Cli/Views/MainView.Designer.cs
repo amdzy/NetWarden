@@ -37,6 +37,10 @@ namespace NetWarden.Cli.Views
 
         private Terminal.Gui.LineView lineView;
 
+        private Terminal.Gui.Button openNameViewBtn;
+
+        private Terminal.Gui.Button updateInterfaceBtn;
+
         private Terminal.Gui.Button refreshBtn;
 
         private Terminal.Gui.Button killAllBtn;
@@ -47,19 +51,18 @@ namespace NetWarden.Cli.Views
 
         private Terminal.Gui.Button unKillBtn;
 
-        private Terminal.Gui.Button openNameViewBtn;
-
         private Terminal.Gui.Button exitBtn;
 
         private void InitializeComponent()
         {
             this.exitBtn = new Terminal.Gui.Button();
-            this.openNameViewBtn = new Terminal.Gui.Button();
             this.unKillBtn = new Terminal.Gui.Button();
             this.killBtn = new Terminal.Gui.Button();
             this.unKillAllBtn = new Terminal.Gui.Button();
             this.killAllBtn = new Terminal.Gui.Button();
             this.refreshBtn = new Terminal.Gui.Button();
+            this.updateInterfaceBtn = new Terminal.Gui.Button();
+            this.openNameViewBtn = new Terminal.Gui.Button();
             this.lineView = new Terminal.Gui.LineView();
             this.cancelSetNameBtn = new Terminal.Gui.Button();
             this.setNameBtn = new Terminal.Gui.Button();
@@ -195,6 +198,16 @@ namespace NetWarden.Cli.Views
             this.lineView.LineRune = '─';
             this.lineView.Orientation = Terminal.Gui.Graphs.Orientation.Horizontal;
             this.Add(this.lineView);
+            this.updateInterfaceBtn.Width = 20;
+            this.updateInterfaceBtn.Height = 1;
+            this.updateInterfaceBtn.X = Pos.AnchorEnd(31);
+            this.updateInterfaceBtn.Y = Pos.Bottom(lineView);
+            this.updateInterfaceBtn.Visible = true;
+            this.updateInterfaceBtn.Data = "updateInterfaceBtn";
+            this.updateInterfaceBtn.Text = "Select Interface";
+            this.updateInterfaceBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.updateInterfaceBtn.IsDefault = false;
+            this.Add(this.updateInterfaceBtn);
             this.refreshBtn.Width = 11;
             this.refreshBtn.Height = 1;
             this.refreshBtn.X = 0;
@@ -247,7 +260,7 @@ namespace NetWarden.Cli.Views
             this.Add(this.unKillBtn);
             this.openNameViewBtn.Width = 15;
             this.openNameViewBtn.Height = 1;
-            this.openNameViewBtn.X = Pos.AnchorEnd(26);
+            this.openNameViewBtn.X = Pos.AnchorEnd(47);
             this.openNameViewBtn.Y = Pos.Bottom(lineView);
             this.openNameViewBtn.Visible = true;
             this.openNameViewBtn.Data = "openNameViewBtn";

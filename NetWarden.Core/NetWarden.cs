@@ -47,6 +47,15 @@ public class NetWarden
         }
     }
 
+    public void Restart()
+    {
+        _deviceManager = new DeviceManager();
+        _scanner = new Scanner(_deviceManager, _nameResolver);
+        _killer = new Killer(_scanner, _deviceManager);
+
+        Start();
+    }
+
     public void StopScan()
     {
         _scanner.Stop();
@@ -93,5 +102,28 @@ public class NetWarden
         LibPcapLiveDeviceList captureDeviceList = LibPcapLiveDeviceList.Instance;
         captureDeviceList.Refresh();
         return captureDeviceList.Where(x => x.Addresses.Any(x => x.Addr.type == Sockaddr.AddressTypes.AF_INET_AF_INET6 && x.Addr?.ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)).ToList();
+    }
+
+    public static void SetDevice(string name)
+    {
+        var devices = ListDevices();
+        var found = false;
+        foreach (var device in devices)
+        {
+            if (device.Name == name)
+            {
+                var d = new Device
+                {
+                    Name = device.Name
+                };
+                DataStore.SaveDevice(d);
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            throw new Exception("Invalid device name");
+        }
     }
 }

@@ -40,6 +40,17 @@ internal class Killer
         client!.IsKilled = false;
     }
 
+    public void UnKillAll()
+    {
+        foreach (var client in _scanner.GetClients())
+        {
+            if (client.Value.IsKilled)
+            {
+                client.Value.IsKilled = false;
+            }
+        }
+    }
+
     private bool ShouldKill(Client victim)
     {
         return _scanner.GetClients().ContainsKey(victim.Mac.ToString()) && _scanner.GetClients()[victim.Mac.ToString()].IsKilled;

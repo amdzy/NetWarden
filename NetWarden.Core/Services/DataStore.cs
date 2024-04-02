@@ -30,6 +30,31 @@ public static class DataStore
         JsonSerializer.Serialize(fileStream, clients, typeof(List<SerializedClient>), SourceGenerationContext.Default);
     }
 
+
+
+    public static Device? LoadDevice()
+    {
+        CheckDataDirCreated();
+        var path = Path.Combine(DataPath, "data", "device.json");
+
+        using var fileStream = File.Open(path, FileMode.OpenOrCreate, FileAccess.Read);
+        if (fileStream.Length == 0)
+        {
+            return null;
+        }
+        return JsonSerializer.Deserialize(fileStream, typeof(Device), SourceGenerationContext.Default) as Device;
+    }
+
+    public static void SaveDevice(Device device)
+    {
+        CheckDataDirCreated();
+        var path = Path.Combine(DataPath, "data", "device.json");
+
+        using var fileStream = File.Open(path, FileMode.Create, FileAccess.Write);
+
+        JsonSerializer.Serialize(fileStream, device, typeof(Device), SourceGenerationContext.Default);
+    }
+
     private static void CheckDataDirCreated()
     {
         var path = Path.Combine(DataPath, "data");

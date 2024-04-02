@@ -11,14 +11,29 @@ public class DeviceManager : IDisposable
     public DeviceManager()
     {
         var devices = NetWarden.ListDevices();
-        foreach (var d in devices)
+        var savedDevice = DataStore.LoadDevice();
+        if (savedDevice is not null)
         {
-            foreach (var addr in d.Interface.GatewayAddresses)
+            foreach (var d in devices)
             {
-                if (addr.ToString().StartsWith("192"))
+                if (d.Name == savedDevice.Name)
                 {
                     _device = d;
                     break;
+                }
+            }
+        }
+        else
+        {
+            foreach (var d in devices)
+            {
+                foreach (var addr in d.Interface.GatewayAddresses)
+                {
+                    if (addr.ToString().StartsWith("192"))
+                    {
+                        _device = d;
+                        break;
+                    }
                 }
             }
         }

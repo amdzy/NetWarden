@@ -25,6 +25,8 @@ namespace NetWarden.Cli.Views
             cancelSetNameBtn.Clicked += OnCloseNameView;
             setNameBtn.Clicked += OnSetNameBtn;
 
+            updateInterfaceBtn.Clicked += OnUpdateInterface;
+
             refreshBtn.Visible = false;
 
             tableView.SelectedCellChanged += (TableView.SelectedCellChangedEventArgs e) =>
@@ -40,7 +42,7 @@ namespace NetWarden.Cli.Views
             });
 
             killAllBtn.HotKey = Key.A;
-            unKillBtn.HotKey = Key.S;
+            unKillBtn.HotKey = Key.V;
             unKillAllBtn.HotKey = Key.D;
         }
 
@@ -143,6 +145,11 @@ namespace NetWarden.Cli.Views
             var newName = newNameField.Text.ToString() ?? "";
             _mainController.UpdateClientName(tableView.SelectedRow, newName);
             OnCloseNameView();
+        }
+
+        public void OnUpdateInterface()
+        {
+            _mainController.UpdateInterface();
         }
 
 

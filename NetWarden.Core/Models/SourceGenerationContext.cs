@@ -7,6 +7,7 @@ namespace NetWarden.Core.Models;
 [JsonSerializable(typeof(List<Vendor>))]
 [JsonSerializable(typeof(SerializedClient))]
 [JsonSerializable(typeof(List<SerializedClient>))]
+[JsonSerializable(typeof(Device))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }
