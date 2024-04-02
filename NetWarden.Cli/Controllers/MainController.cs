@@ -1,4 +1,5 @@
 using System.Data;
+using NetWarden.Cli.Views;
 using NetWarden.Core.Extensions;
 using NetWarden.Core.Models;
 using Terminal.Gui;
@@ -75,6 +76,14 @@ public class MainController
         var client = Clients[row];
         if (client is null) return;
         _netWarden.UpdateClientName(client, name);
+    }
+
+    public void UpdateInterface()
+    {
+        Application.Run(new SelectDeviceVew());
+        Clients = [];
+        ClientsChanged?.Invoke(this, EventArgs.Empty);
+        _netWarden.Restart();
     }
 
     public DataTable GetTableData()
