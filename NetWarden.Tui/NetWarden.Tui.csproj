@@ -16,7 +16,7 @@
     <ProjectReference Include="..\NetWarden.Core\NetWarden.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Terminal.Gui" Version="1.15.1" />
+    <PackageReference Include="Terminal.Gui" Version="2.0.0-pre.735" />
   </ItemGroup>
 
 </Project>
