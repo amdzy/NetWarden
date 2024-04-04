@@ -3,7 +3,7 @@ using NetWarden.Core.Extensions;
 using SharpPcap.LibPcap;
 using Terminal.Gui;
 
-namespace NetWarden.Cli.Views
+namespace NetWarden.Tui.Views
 {
     public partial class SelectDeviceVew
     {

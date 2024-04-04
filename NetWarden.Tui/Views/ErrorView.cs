@@ -1,4 +1,4 @@
-namespace NetWarden.Cli.Views
+namespace NetWarden.Tui.Views
 {
     using NetWarden.Core.Exceptions;
     using Terminal.Gui;

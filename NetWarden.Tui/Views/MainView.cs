@@ -1,6 +1,6 @@
-namespace NetWarden.Cli.Views
+namespace NetWarden.Tui.Views
 {
-    using NetWarden.Cli.Controllers;
+    using NetWarden.Tui.Controllers;
     using Terminal.Gui;
 
     public partial class MainView

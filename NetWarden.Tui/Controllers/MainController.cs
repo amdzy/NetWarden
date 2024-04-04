@@ -1,10 +1,10 @@
 using System.Data;
-using NetWarden.Cli.Views;
+using NetWarden.Tui.Views;
 using NetWarden.Core.Extensions;
 using NetWarden.Core.Models;
 using Terminal.Gui;
 
-namespace NetWarden.Cli.Controllers;
+namespace NetWarden.Tui.Controllers;
 
 public class MainController
 {

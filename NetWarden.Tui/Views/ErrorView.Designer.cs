@@ -8,7 +8,7 @@
 //      the code is regenerated.
 //  </auto-generated>
 // -----------------------------------------------------------------------------
-namespace NetWarden.Cli.Views
+namespace NetWarden.Tui.Views
 {
     using System;
     using Terminal.Gui;

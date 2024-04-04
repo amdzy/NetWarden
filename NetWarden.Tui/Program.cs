@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
-using NetWarden.Cli.Controllers;
-using NetWarden.Cli.Views;
+using NetWarden.Tui.Controllers;
+using NetWarden.Tui.Views;
 using Terminal.Gui;
 
-namespace NetWarden.Cli;
+namespace NetWarden.Tui;
 
 public class Program
 {
@@ -77,7 +77,7 @@ public class Program
         Console.WriteLine();
         Console.WriteLine("Commands: ");
         Console.WriteLine("  list-devices    List all devices");
-        Console.WriteLine("  set-device  <Device>    Set device to capture");
+        Console.WriteLine("  set-device  <device name>    Set device to capture");
         Console.WriteLine("Keyboard Shortcuts Inside the TUI:");
         Console.WriteLine("  Alt + R   Refresh");
         Console.WriteLine("  Alt + C   Cut a specific device");
@@ -86,7 +86,7 @@ public class Program
         Console.WriteLine("  Alt + D   Restore all devices");
         Console.WriteLine("  Alt + U   Update the name for a device");
         Console.WriteLine("  Alt + S   Update the device used");
-        Console.WriteLine("  Alt/Ctrl + Q   Quit the TUI");
+        Console.WriteLine("  Alt + Q   Quit the TUI");
         Console.WriteLine("Options:");
         Console.WriteLine("  -h, --help     Show this help information");
         Console.WriteLine("  -v, --version  Show the version information");

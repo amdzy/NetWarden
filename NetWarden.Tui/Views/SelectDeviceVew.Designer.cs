@@ -8,22 +8,25 @@
 //      the code is regenerated.
 //  </auto-generated>
 // -----------------------------------------------------------------------------
-namespace NetWarden.Cli.Views {
+namespace NetWarden.Tui.Views
+{
     using System;
     using Terminal.Gui;
-    
-    
-    public partial class SelectDeviceVew : Terminal.Gui.Window {
-        
+
+
+    public partial class SelectDeviceVew : Terminal.Gui.Window
+    {
+
         private Terminal.Gui.TableView tableView;
-        
+
         private Terminal.Gui.LineView lineView;
-        
+
         private Terminal.Gui.Button selectBtn;
-        
+
         private Terminal.Gui.Button exitBtn;
-        
-        private void InitializeComponent() {
+
+        private void InitializeComponent()
+        {
             this.exitBtn = new Terminal.Gui.Button();
             this.selectBtn = new Terminal.Gui.Button();
             this.lineView = new Terminal.Gui.LineView();
