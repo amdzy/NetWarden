@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Data;
 using NetWarden.Core.Extensions;
 using SharpPcap.LibPcap;
@@ -16,11 +17,10 @@ namespace NetWarden.Tui.Views
             devices = Core.NetWarden.ListDevices();
             var dt = GetTableData();
 
-            tableView.Table = dt;
-            tableView.Update();
+            tableView.Table = new DataTableSource(dt);
 
-            exitBtn.Clicked += OnExitBtn;
-            selectBtn.Clicked += OnSelectDevice;
+            exitBtn.Accept += OnExitBtn;
+            selectBtn.Accept += OnSelectDevice;
         }
 
         private DataTable GetTableData()
@@ -58,7 +58,7 @@ namespace NetWarden.Tui.Views
             return dt;
         }
 
-        public void OnSelectDevice()
+        public void OnSelectDevice(object? sender, CancelEventArgs e)
         {
             var row = tableView.SelectedRow;
             if (row < 0 || row > devices.Count) return;
@@ -67,7 +67,7 @@ namespace NetWarden.Tui.Views
             Application.RequestStop();
         }
 
-        public void OnExitBtn()
+        public void OnExitBtn(object? sender, CancelEventArgs e)
         {
             Application.RequestStop();
         }
