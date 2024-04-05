@@ -1,5 +1,6 @@
 namespace NetWarden.Tui.Views
 {
+    using System.ComponentModel;
     using NetWarden.Core.Exceptions;
     using Terminal.Gui;
 
@@ -21,10 +22,10 @@ namespace NetWarden.Tui.Views
                 errorTitle.Text = "Platform Not Supported";
             }
 
-            exitBtn.Clicked += OnExitBtn;
+            exitBtn.Accept += OnExitBtn;
         }
 
-        public void OnExitBtn()
+        public void OnExitBtn(Object? sender, CancelEventArgs e)
         {
             Application.RequestStop();
         }
