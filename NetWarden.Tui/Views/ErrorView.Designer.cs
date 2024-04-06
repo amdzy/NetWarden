@@ -82,6 +82,7 @@ public partial class ErrorView : Terminal.Gui.Window
         this.exitBtn.Text = "Quit";
         this.exitBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.exitBtn.IsDefault = false;
+        this.exitBtn.NoDecorations = true;
         this.Add(this.exitBtn);
     }
 }

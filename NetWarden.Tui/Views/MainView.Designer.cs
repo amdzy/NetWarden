@@ -118,6 +118,7 @@ public partial class MainView : Terminal.Gui.Window
         this.setNameBtn.Text = "Ok";
         this.setNameBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.setNameBtn.IsDefault = true;
+        this.setNameBtn.NoDecorations = true;
         this.updateNameView.Add(this.setNameBtn);
         this.cancelSetNameBtn.AutoSize = false;
         this.cancelSetNameBtn.Width = 10;
@@ -129,6 +130,7 @@ public partial class MainView : Terminal.Gui.Window
         this.cancelSetNameBtn.Text = "Cancel";
         this.cancelSetNameBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.cancelSetNameBtn.IsDefault = false;
+        this.cancelSetNameBtn.NoDecorations = true;
         this.updateNameView.Add(this.cancelSetNameBtn);
         this.lineView.AutoSize = false;
         this.lineView.Width = Dim.Fill(0);
@@ -151,6 +153,7 @@ public partial class MainView : Terminal.Gui.Window
         this.updateInterfaceBtn.Text = "Select Interface";
         this.updateInterfaceBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.updateInterfaceBtn.IsDefault = false;
+        this.updateInterfaceBtn.NoDecorations = true;
         this.Add(this.updateInterfaceBtn);
         this.refreshBtn.AutoSize = false;
         this.refreshBtn.Width = 11;
@@ -162,6 +165,7 @@ public partial class MainView : Terminal.Gui.Window
         this.refreshBtn.Text = "Refresh";
         this.refreshBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.refreshBtn.IsDefault = false;
+        this.refreshBtn.NoDecorations = true;
         this.Add(this.refreshBtn);
         this.killAllBtn.AutoSize = false;
         this.killAllBtn.Width = 11;
@@ -173,6 +177,7 @@ public partial class MainView : Terminal.Gui.Window
         this.killAllBtn.Text = "Cut All";
         this.killAllBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.killAllBtn.IsDefault = false;
+        this.killAllBtn.NoDecorations = true;
         this.Add(this.killAllBtn);
         this.unKillAllBtn.AutoSize = false;
         this.unKillAllBtn.Width = 15;
@@ -184,6 +189,7 @@ public partial class MainView : Terminal.Gui.Window
         this.unKillAllBtn.Text = "Restore All";
         this.unKillAllBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.unKillAllBtn.IsDefault = false;
+        this.unKillAllBtn.NoDecorations = true;
         this.Add(this.unKillAllBtn);
         this.killBtn.AutoSize = false;
         this.killBtn.Width = 7;
@@ -195,6 +201,7 @@ public partial class MainView : Terminal.Gui.Window
         this.killBtn.Text = "Cut";
         this.killBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.killBtn.IsDefault = false;
+        this.killBtn.NoDecorations = true;
         this.Add(this.killBtn);
         this.unKillBtn.AutoSize = false;
         this.unKillBtn.Width = 11;
@@ -206,6 +213,7 @@ public partial class MainView : Terminal.Gui.Window
         this.unKillBtn.Text = "Restore";
         this.unKillBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.unKillBtn.IsDefault = false;
+        this.unKillBtn.NoDecorations = true;
         this.Add(this.unKillBtn);
         this.openNameViewBtn.AutoSize = false;
         this.openNameViewBtn.Width = 15;
@@ -217,6 +225,7 @@ public partial class MainView : Terminal.Gui.Window
         this.openNameViewBtn.Text = "Update Name";
         this.openNameViewBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.openNameViewBtn.IsDefault = false;
+        this.openNameViewBtn.NoDecorations = true;
         this.Add(this.openNameViewBtn);
         this.exitBtn.AutoSize = false;
         this.exitBtn.Width = 8;
@@ -228,6 +237,7 @@ public partial class MainView : Terminal.Gui.Window
         this.exitBtn.Text = "Quit";
         this.exitBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.exitBtn.IsDefault = false;
+        this.exitBtn.NoDecorations = true;
         this.Add(this.exitBtn);
     }
 }

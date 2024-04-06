@@ -65,7 +65,8 @@ public partial class SelectDeviceVew : Terminal.Gui.Window
         this.selectBtn.Data = "selectBtn";
         this.selectBtn.Text = "Select";
         this.selectBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
-        this.selectBtn.IsDefault = false;
+        this.selectBtn.IsDefault = true;
+        this.selectBtn.NoDecorations = true;
         this.Add(this.selectBtn);
         this.exitBtn.AutoSize = false;
         this.exitBtn.Width = 8;
@@ -77,6 +78,7 @@ public partial class SelectDeviceVew : Terminal.Gui.Window
         this.exitBtn.Text = "Quit";
         this.exitBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
         this.exitBtn.IsDefault = false;
+        this.exitBtn.NoDecorations = true;
         this.Add(this.exitBtn);
     }
 }

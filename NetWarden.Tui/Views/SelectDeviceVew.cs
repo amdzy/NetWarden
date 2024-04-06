@@ -52,7 +52,7 @@ namespace NetWarden.Tui.Views
                     }
                 }
 
-                dt.Rows.Add(device.Name, device.MacAddress?.GetFormattedAddress(), ipv4, ipv6);
+                dt.Rows.Add(device.Interface.FriendlyName, device.MacAddress?.GetFormattedAddress(), ipv4, ipv6);
             }
 
             return dt;
