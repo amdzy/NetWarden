@@ -132,13 +132,10 @@ internal class Scanner : IDisposable
 
     private void ProbeDevices()
     {
-        var device = _deviceManager.GetDevice();
         Task.Run(() =>
         {
             for (int i = 1; i <= 255; i++)
             {
-                if (device == null || device.Opened == false)
-                    break;
                 var targetIp = IPAddress.Parse(HostInfo.RootIp + i);
                 var arpPacket = new ArpPacket(ArpOperation.Request,
                     targetHardwareAddress: HostInfo.EmptyMac,
@@ -153,7 +150,7 @@ internal class Scanner : IDisposable
                 {
                     PayloadPacket = arpPacket
                 };
-                device.SendPacket(ethernetPacket);
+                _deviceManager.SendPacket(ethernetPacket);
             }
         });
     }
