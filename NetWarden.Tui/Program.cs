@@ -78,15 +78,6 @@ public class Program
         Console.WriteLine("Commands: ");
         Console.WriteLine("  list-devices    List all devices");
         Console.WriteLine("  set-device  <device name>    Set device to capture");
-        Console.WriteLine("Keyboard Shortcuts Inside the TUI:");
-        Console.WriteLine("  Alt + R   Refresh");
-        Console.WriteLine("  Alt + C   Cut a specific device");
-        Console.WriteLine("  Alt + V   Restore a specific device");
-        Console.WriteLine("  Alt + A   Cut all devices");
-        Console.WriteLine("  Alt + D   Restore all devices");
-        Console.WriteLine("  Alt + U   Update the name for a device");
-        Console.WriteLine("  Alt + S   Update the device used");
-        Console.WriteLine("  Alt + Q   Quit the TUI");
         Console.WriteLine("Options:");
         Console.WriteLine("  -h, --help     Show this help information");
         Console.WriteLine("  -v, --version  Show the version information");

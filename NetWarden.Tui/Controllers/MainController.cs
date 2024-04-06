@@ -83,10 +83,12 @@ public class MainController
         Application.Run(new SelectDeviceVew());
         Clients = [];
         ClientsChanged?.Invoke(this, EventArgs.Empty);
+        _netWarden.ClientsChanged -= OnClientsChanged;
         _netWarden.Restart();
+        _netWarden.ClientsChanged += OnClientsChanged;
     }
 
-    public DataTable GetTableData()
+    public DataTable GetBaseTableData()
     {
         var dt = new DataTable();
 
@@ -96,6 +98,13 @@ public class MainController
         dt.Columns.Add("Is Killed");
         dt.Columns.Add("Vendor");
         dt.Columns.Add("Last seen");
+
+        return dt;
+    }
+
+    public DataTable GetTableData()
+    {
+        var dt = GetBaseTableData();
 
         foreach (var client in Clients)
         {
