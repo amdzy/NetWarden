@@ -51,7 +51,7 @@ internal class Scanner : IDisposable
 
         _backgroundScanTimer?.Dispose();
         _backgroundScanTimer = new System.Timers.Timer(TimeSpan.FromSeconds(10));
-        _backgroundScanTimer.Elapsed += OnTimedEvent;
+        _backgroundScanTimer.Elapsed += OnBackgroundScanTimedEvent;
         _backgroundScanTimer.Start();
         IsBackgroundScanning = true;
 
@@ -164,7 +164,7 @@ internal class Scanner : IDisposable
 
     }
 
-    private void OnTimedEvent(object? source, ElapsedEventArgs e)
+    private void OnBackgroundScanTimedEvent(object? source, ElapsedEventArgs e)
     {
         Refresh();
     }
@@ -175,7 +175,7 @@ internal class Scanner : IDisposable
         {
             if (client.Value.IsGateway() == false &&
                 client.Value.IsLocalDevice() == false &&
-                (DateTime.UtcNow - client.Value.LastArpTime).Seconds > 45)
+                (DateTime.UtcNow - client.Value.LastArpTime).Seconds > 60)
             {
                 client.Value.IsOnline = false;
                 ClientsChanged?.Invoke(this, EventArgs.Empty);
