@@ -12,6 +12,7 @@ public class NetWarden
     private DeviceManager _deviceManager;
     private Killer _killer;
     private NameResolver _nameResolver;
+    private Defender _defender;
     public event EventHandler? ClientsChanged
     {
         add => _scanner.ClientsChanged += value;
@@ -24,6 +25,7 @@ public class NetWarden
         _nameResolver = new NameResolver();
         _scanner = new Scanner(_deviceManager, _nameResolver);
         _killer = new Killer(_scanner, _deviceManager);
+        _defender = new Defender(_deviceManager);
     }
 
     public void Start()
@@ -50,12 +52,14 @@ public class NetWarden
     public void Restart()
     {
         _killer.UnKillAll();
+        _defender.Dispose();
         _scanner.Stop();
         _deviceManager.Dispose();
 
         _deviceManager = new DeviceManager();
         _scanner = new Scanner(_deviceManager, _nameResolver);
         _killer = new Killer(_scanner, _deviceManager);
+        _defender = new Defender(_deviceManager);
 
         Start();
     }
@@ -93,6 +97,21 @@ public class NetWarden
     public void UnKillClient(Client client)
     {
         _killer.UnKill(client);
+    }
+
+    public void StartDefend()
+    {
+        _defender.Defend();
+    }
+
+    public void StopDefend()
+    {
+        _defender.StopDefend();
+    }
+
+    public bool GetIsDefending()
+    {
+        return _defender.IsDefending;
     }
 
     public void UpdateClientName(Client client, string name)
