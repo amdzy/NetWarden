@@ -32,6 +32,8 @@ public partial class MainView : Terminal.Gui.Window
 
     private Terminal.Gui.Button unKillBtn;
 
+    private Terminal.Gui.Button defendMeBtn;
+
     private Terminal.Gui.Button exitBtn;
 
     private void InitializeComponent()
@@ -47,6 +49,7 @@ public partial class MainView : Terminal.Gui.Window
         this.lineView = new Terminal.Gui.LineView();
         this.cancelSetNameBtn = new Terminal.Gui.Button();
         this.setNameBtn = new Terminal.Gui.Button();
+        this.defendMeBtn = new Terminal.Gui.Button();
         this.newNameField = new Terminal.Gui.TextField();
         this.newNameLabel = new Terminal.Gui.Label();
         this.updateNameView = new Terminal.Gui.View();
@@ -146,7 +149,7 @@ public partial class MainView : Terminal.Gui.Window
         this.updateInterfaceBtn.AutoSize = false;
         this.updateInterfaceBtn.Width = 20;
         this.updateInterfaceBtn.Height = 1;
-        this.updateInterfaceBtn.X = Pos.AnchorEnd(31);
+        this.updateInterfaceBtn.X = Pos.AnchorEnd(29);
         this.updateInterfaceBtn.Y = Pos.Bottom(lineView);
         this.updateInterfaceBtn.Visible = true;
         this.updateInterfaceBtn.Data = "updateInterfaceBtn";
@@ -218,7 +221,7 @@ public partial class MainView : Terminal.Gui.Window
         this.openNameViewBtn.AutoSize = false;
         this.openNameViewBtn.Width = 15;
         this.openNameViewBtn.Height = 1;
-        this.openNameViewBtn.X = Pos.AnchorEnd(47);
+        this.openNameViewBtn.X = Pos.AnchorEnd(62);
         this.openNameViewBtn.Y = Pos.Bottom(lineView);
         this.openNameViewBtn.Visible = true;
         this.openNameViewBtn.Data = "openNameViewBtn";
@@ -239,5 +242,18 @@ public partial class MainView : Terminal.Gui.Window
         this.exitBtn.IsDefault = false;
         this.exitBtn.NoDecorations = true;
         this.Add(this.exitBtn);
+
+        this.defendMeBtn.AutoSize = false;
+        this.defendMeBtn.Width = 17;
+        this.defendMeBtn.Height = 1;
+        this.defendMeBtn.X = Pos.AnchorEnd(46);
+        this.defendMeBtn.Y = Pos.Bottom(lineView);
+        this.defendMeBtn.Visible = true;
+        this.defendMeBtn.Data = "defendMeBtn";
+        this.defendMeBtn.Text = "Protect Me";
+        this.defendMeBtn.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+        this.defendMeBtn.IsDefault = false;
+        this.defendMeBtn.NoDecorations = true;
+        this.Add(this.defendMeBtn);
     }
 }

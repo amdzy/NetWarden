@@ -13,6 +13,8 @@ public class MainController
     public Client[] Clients = [];
     public event EventHandler? ClientsChanged;
 
+    public bool IsDefending { get => _netWarden.GetIsDefending(); }
+
     public MainController(Core.NetWarden netWarden)
     {
         _netWarden = netWarden;
@@ -67,6 +69,18 @@ public class MainController
             _netWarden.UnKillClient(client);
         }
         UpdateClients();
+    }
+
+    public void HandleDefense()
+    {
+        if (_netWarden.GetIsDefending())
+        {
+            _netWarden.StopDefend();
+        }
+        else
+        {
+            _netWarden.StartDefend();
+        }
     }
 
     public void UpdateClientName(int row, string name)

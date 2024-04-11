@@ -22,6 +22,7 @@ public partial class MainView
         killAllBtn.Accept += OnKillAllBtn;
         refreshBtn.Accept += OnRefreshBtn;
         exitBtn.Accept += OnExitBtn;
+        defendMeBtn.Accept += OnDefendMeBtn;
 
         openNameViewBtn.Accept += OnOpenNameView;
         cancelSetNameBtn.Accept += OnCloseNameView;
@@ -47,6 +48,8 @@ public partial class MainView
 
         tableView.Table = new DataTableSource(dt);
     }
+
+
 
     public void OnKillBtn(object? sender, CancelEventArgs e)
     {
@@ -100,12 +103,14 @@ public partial class MainView
             unKillAllBtn.Visible = false;
             killAllBtn.Visible = false;
             openNameViewBtn.Visible = false;
+            defendMeBtn.Visible = false;
             return;
         }
         else
         {
             unKillAllBtn.Visible = true;
             killAllBtn.Visible = true;
+            defendMeBtn.Visible = true;
         }
         var row = tableView.SelectedRow;
         var client = _mainController.Clients?[row];
@@ -123,11 +128,26 @@ public partial class MainView
             }
             openNameViewBtn.Visible = true;
         }
+
+        if (_mainController.IsDefending)
+        {
+            defendMeBtn.Text = "Stop Protection";
+        }
+        else
+        {
+            defendMeBtn.Text = "Protect Me";
+        }
     }
 
     public void OnExitBtn(object? sender, CancelEventArgs e)
     {
         _mainController.Exit();
+    }
+
+    private void OnDefendMeBtn(object? sender, CancelEventArgs e)
+    {
+        _mainController.HandleDefense();
+        UpdateButtons();
     }
 
     public void OnOpenNameView(object? sender, CancelEventArgs e)
