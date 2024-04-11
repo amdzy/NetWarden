@@ -46,6 +46,14 @@ public class DeviceManager : IDisposable
         return _device;
     }
 
+    public LibPcapLiveDevice CreateDevice(string filter = "arp", int timeout = 1000)
+    {
+        var device = new LibPcapLiveDevice(_device.Interface);
+        device.Open(DeviceModes.Promiscuous, timeout);
+        device.Filter = filter;
+        return device;
+    }
+
     public void Start()
     {
         if (_device is null || _device.Opened == true) return;
