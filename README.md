@@ -37,13 +37,13 @@ Before running NetWarden, make sure to have the following dependencies installed
 
 ## Download
 
-You can download the latest binary from the [release page](https://github.com/soul-remix/NetWarden/releases).
+You can download the latest binary from the [release page](https://github.com/amdzy/NetWarden/releases).
 
 ## Build
 
 If you prefer to build NetWarden from the source code, follow these steps:
 
-- Clone the repository: `git clone https://github.com/Soul-Remix/NetWarden.git`
+- Clone the repository: `git clone https://github.com/amdzy/NetWarden.git`
 - Navigate to the project directory: `cd NetWarden`
 - Restore the application: `dotnet restore`
 - Build the app: `dotnet publish -c Release`
