@@ -12,8 +12,8 @@ internal class Scanner : IDisposable
 {
     private DeviceManager _deviceManager;
     private NameResolver _nameResolver;
+    private LibPcapLiveDevice _device;
     private ConcurrentDictionary<string, Client> _clients = [];
-    private CancellationTokenSource _cancellationTokenSource;
     private System.Timers.Timer? _backgroundScanTimer;
     private System.Timers.Timer? _isAliveTimer;
     public bool IsRunning { get; private set; }
@@ -24,17 +24,17 @@ internal class Scanner : IDisposable
     {
         _deviceManager = deviceManager;
         _nameResolver = nameResolver;
-        _cancellationTokenSource = new CancellationTokenSource();
-        _deviceManager.RegisterOnPacketArrival(OnPacketArrival);
+        _device = _deviceManager.CreateDevice();
+        _device.OnPacketArrival += OnPacketArrival;
+        Start();
     }
 
     public void Start()
     {
         if (!IsRunning)
         {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new CancellationTokenSource();
             IsRunning = true;
+            _device.StartCapture();
             ProbeDevices();
         }
         StartBackgroundScan();
@@ -81,10 +81,9 @@ internal class Scanner : IDisposable
 
     public void Stop()
     {
-        _cancellationTokenSource?.Cancel();
+        _device.StopCapture();
         IsRunning = false;
         StopBackgroundScan();
-        _deviceManager.RemoveOnPacketArrival(OnPacketArrival);
     }
 
     public ConcurrentDictionary<string, Client> GetClients()
@@ -101,9 +100,35 @@ internal class Scanner : IDisposable
         }
     }
 
-    private void ProcessPacket(RawCapture rawCapture)
+    private void ProbeDevices()
     {
-        Packet packet = Packet.ParsePacket(rawCapture.LinkLayerType, rawCapture.Data);
+        Task.Run(() =>
+        {
+            for (int i = 1; i <= 255; i++)
+            {
+                var targetIp = IPAddress.Parse(HostInfo.RootIp + i);
+                var arpPacket = new ArpPacket(ArpOperation.Request,
+                    targetHardwareAddress: HostInfo.EmptyMac,
+                    targetProtocolAddress: targetIp,
+                    senderHardwareAddress: HostInfo.HostMac,
+                    senderProtocolAddress: HostInfo.HostIp);
+
+                var ethernetPacket = new EthernetPacket(
+                    sourceHardwareAddress: HostInfo.HostMac,
+                    destinationHardwareAddress: HostInfo.BroadcastMac,
+                    EthernetType.Arp)
+                {
+                    PayloadPacket = arpPacket
+                };
+                _device.SendPacket(ethernetPacket.Bytes);
+            }
+        });
+    }
+
+    private void OnPacketArrival(object sender, PacketCapture packetCapture)
+    {
+        var rawPacket = packetCapture.GetPacket();
+        Packet packet = Packet.ParsePacket(rawPacket.LinkLayerType, rawPacket.Data);
         ArpPacket arpPacket = packet.Extract<ArpPacket>();
         if (arpPacket is null || arpPacket.Operation == ArpOperation.Request)
             return;
@@ -130,40 +155,6 @@ internal class Scanner : IDisposable
         }
     }
 
-    private void ProbeDevices()
-    {
-        Task.Run(() =>
-        {
-            for (int i = 1; i <= 255; i++)
-            {
-                var targetIp = IPAddress.Parse(HostInfo.RootIp + i);
-                var arpPacket = new ArpPacket(ArpOperation.Request,
-                    targetHardwareAddress: HostInfo.EmptyMac,
-                    targetProtocolAddress: targetIp,
-                    senderHardwareAddress: HostInfo.HostMac,
-                    senderProtocolAddress: HostInfo.HostIp);
-
-                var ethernetPacket = new EthernetPacket(
-                    sourceHardwareAddress: HostInfo.HostMac,
-                    destinationHardwareAddress: HostInfo.BroadcastMac,
-                    EthernetType.Arp)
-                {
-                    PayloadPacket = arpPacket
-                };
-                _deviceManager.SendPacket(ethernetPacket);
-            }
-        });
-    }
-
-    private void OnPacketArrival(object sender, PacketCapture packetCapture)
-    {
-        if (_cancellationTokenSource?.IsCancellationRequested == false)
-        {
-            ProcessPacket(packetCapture.GetPacket());
-        }
-
-    }
-
     private void OnBackgroundScanTimedEvent(object? source, ElapsedEventArgs e)
     {
         Refresh();
@@ -188,5 +179,6 @@ internal class Scanner : IDisposable
         GC.SuppressFinalize(this);
 
         Stop();
+        _device.Dispose();
     }
 }
