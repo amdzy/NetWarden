@@ -60,7 +60,6 @@ public class DeviceManager : IDisposable
         int readTimeout = 1000;
         _device.Open(DeviceModes.Promiscuous, readTimeout);
         _device.Filter = "arp";
-        StartCapture();
     }
 
     public void StartCapture()

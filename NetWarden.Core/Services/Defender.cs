@@ -57,7 +57,7 @@ internal class Defender : IDisposable
         {
             PayloadPacket = arpPacket
         };
-        _deviceManager.SendPacket(etherPacket);
+        _device.SendPacket(etherPacket);
     }
 
     private void OnPacketArrival(object sender, PacketCapture packetCapture)
