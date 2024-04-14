@@ -27,6 +27,7 @@ NetWarden is an open source network management tool that provides a range of fea
 - Background scanning for ongoing network monitoring.
 - Live device scanning for real-time updates.
 - Ability to add a nickname for each device (persisted).
+- Defend Against ARP spoofing attacks (including the ones done by another NetWarden user)
 
 ## Prerequisites
 
@@ -52,7 +53,7 @@ Make sure you have .NET SDK installed on your machine before building from sourc
 
 ## TODO
 
-- [ ] Ability to defend against spoofing attacks.
+- [x] Ability to defend against spoofing attacks.
 - [ ] Limit download and upload speed for devices.
 - [ ] Create a GUI for the application.
 
