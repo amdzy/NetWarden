@@ -6,34 +6,32 @@ using SharpPcap.LibPcap;
 
 namespace NetWarden.Core;
 
-public class NetWarden
+public class NetWarden : IDisposable
 {
-    private Scanner _scanner;
-    private DeviceManager _deviceManager;
-    private Killer _killer;
+    private Scanner? _scanner;
+    private DeviceManager? _deviceManager;
+    private Killer? _killer;
+    private Defender? _defender;
     private NameResolver _nameResolver;
-    private Defender _defender;
     public event EventHandler? ClientsChanged
     {
-        add => _scanner.ClientsChanged += value;
-        remove => _scanner.ClientsChanged -= value;
+        add => _scanner!.ClientsChanged += value;
+        remove => _scanner!.ClientsChanged -= value;
     }
 
     public NetWarden()
     {
-        _deviceManager = new DeviceManager();
         _nameResolver = new NameResolver();
-        _scanner = new Scanner(_deviceManager, _nameResolver);
-        _killer = new Killer(_scanner, _deviceManager);
-        _defender = new Defender(_deviceManager);
     }
 
     public void Start()
     {
         try
         {
-            _deviceManager.Start();
-            _scanner.Start();
+            _deviceManager = new DeviceManager();
+            _scanner = new Scanner(_deviceManager, _nameResolver);
+            _killer = new Killer(_scanner, _deviceManager);
+            _defender = new Defender(_deviceManager);
         }
         catch (PcapException ex)
         {
@@ -49,74 +47,73 @@ public class NetWarden
         }
     }
 
+    private void Stop()
+    {
+        _defender?.Dispose();
+        _killer?.Dispose();
+        _scanner?.Dispose();
+        _deviceManager?.Dispose();
+    }
+
     public void Restart()
     {
-        _killer.UnKillAll();
-        _defender.Dispose();
-        _scanner.Stop();
-        _deviceManager.Dispose();
-
-        _deviceManager = new DeviceManager();
-        _scanner = new Scanner(_deviceManager, _nameResolver);
-        _killer = new Killer(_scanner, _deviceManager);
-        _defender = new Defender(_deviceManager);
-
+        Stop();
         Start();
     }
 
     public void StopScan()
     {
-        _scanner.Stop();
+        _scanner?.Stop();
     }
 
     public void StartBackgroundScan()
     {
-        _scanner.StartBackgroundScan();
+        _scanner?.StartBackgroundScan();
     }
 
     public void StopBackgroundScan()
     {
-        _scanner.StopBackgroundScan();
+        _scanner?.StopBackgroundScan();
     }
 
     public void Refresh()
     {
-        _scanner.Refresh();
+        _scanner?.Refresh();
     }
 
-    public Client[] GetClients()
+    public Client[]? GetClients()
     {
-        return _scanner.GetClients().Values.ToArray();
+        return _scanner?.GetClients().Values.ToArray();
     }
 
     public void KillClient(Client client)
     {
-        _killer.Kill(client);
+        _killer?.Kill(client);
     }
 
     public void UnKillClient(Client client)
     {
-        _killer.UnKill(client);
+        _killer?.UnKill(client);
     }
 
     public void StartDefend()
     {
-        _defender.Defend();
+        _defender?.Defend();
     }
 
     public void StopDefend()
     {
-        _defender.StopDefend();
+        _defender?.StopDefend();
     }
 
     public bool GetIsDefending()
     {
-        return _defender.IsDefending;
+        return _defender!.IsDefending;
     }
 
     public void UpdateClientName(Client client, string name)
     {
-        _scanner.UpdateClientName(client, name);
+        _scanner?.UpdateClientName(client, name);
         _nameResolver.UpdateClientName(client, name);
     }
 
@@ -148,5 +145,12 @@ public class NetWarden
         {
             throw new Exception("Invalid device name");
         }
+    }
+
+    public void Dispose()
+    {
+        GC.SuppressFinalize(this);
+
+        Stop();
     }
 }
