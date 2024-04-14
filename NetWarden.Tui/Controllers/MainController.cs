@@ -22,11 +22,6 @@ public class MainController
         _netWarden.ClientsChanged += OnClientsChanged;
     }
 
-    public void Start()
-    {
-        _netWarden?.Start();
-    }
-
     public void Exit()
     {
         _netWarden.StopScan();
@@ -130,7 +125,7 @@ public class MainController
 
     private void UpdateClients()
     {
-        Clients = _netWarden.GetClients();
+        Clients = _netWarden.GetClients() ?? [];
         ClientsChanged?.Invoke(this, EventArgs.Empty);
     }
 

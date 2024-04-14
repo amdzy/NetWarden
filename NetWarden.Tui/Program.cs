@@ -19,9 +19,9 @@ public class Program
 
             Application.Init();
 
-            var netWarden = GetWarden();
+            var netWarden = new Core.NetWarden();
+            InitWarden(netWarden);
             var controller = new MainController(netWarden);
-            controller.Start();
 
             Application.Run(new MainView(controller));
         }
@@ -36,18 +36,16 @@ public class Program
 
     }
 
-    private static Core.NetWarden GetWarden()
+    private static void InitWarden(Core.NetWarden netWarden)
     {
         try
         {
-            var netWarden = new Core.NetWarden();
-            return netWarden;
+            netWarden.Start();
         }
         catch (NotSupportedException)
         {
             Application.Run(new SelectDeviceVew());
-            var netWarden = new Core.NetWarden();
-            return netWarden;
+            netWarden.Restart();
         }
     }
 
